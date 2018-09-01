@@ -88,11 +88,12 @@ def basic_menu():
 {}: 回收容器
 {}: 查看镜像
 {}: 查看容器
+{}: 详细信息
 {}: 检查连接
 {}: 返回
 {}: 退出
 ==================
-> """.format(*colored_choice(5)))
+> """.format(*colored_choice(6)))
 
     show_logo()
     if choice == "0":
@@ -284,6 +285,46 @@ def basic_menu():
         print u"[!]完成"
 
     elif choice == "2":
+        show_logo()
+        image_list = json.loads(mt.command2slave("192.168.12.1", json.dumps({
+            "mission": "cmd2docker",
+            "commands": {
+                "command": "images_ls",
+                "arg": []
+            }})))
+
+        if image_list["code"]:
+            print pt.put_color(u"[X]获取虚拟机: 192.168.12.1 的所有镜像失败", "red")
+            print u"  [-]", image_list["msg"]
+            return
+
+        images = image_list["result"]
+        for i, image in enumerate(images):
+            print "%s: %s" % (pt.put_color(str(i), "blue"), image)
+
+    elif choice == '4':
+        mission = {
+            "mission": "cmd2slave",
+            "commands": {
+                "command": "check_alive",
+                "arg": [subnet]
+            }
+        }
+
+        for ip in ips:
+            result = json.loads(mt.command2slave(ip, json.dumps(mission), timeout=10))
+            if result["code"]:
+                print pt.put_color(ip, "red"), pt.put_color(
+                    u"内网", "red"), pt.put_color(u"外网", "red")
+            else:
+                if result["result"]:
+                    print pt.put_color(ip, "yellow"), pt.put_color(
+                        u"内网", "green"), pt.put_color(u"外网", "red")
+                else:
+                    print pt.put_color(ip, "green"), pt.put_color(
+                        u"内网", "green"), pt.put_color(u"外网", "green")
+
+    elif choice == "5":
         slaves_info = {}
         results = command2all_slaves(ips, "images_ls")
         for i, result in enumerate(results):
@@ -343,28 +384,6 @@ def basic_menu():
                     print
 
             print "-"*50
-
-    elif choice == '4':
-        mission = {
-            "mission": "cmd2slave",
-            "commands": {
-                "command": "check_alive",
-                "arg": [subnet]
-            }
-        }
-
-        for ip in ips:
-            result = json.loads(mt.command2slave(ip, json.dumps(mission), timeout=10))
-            if result["code"]:
-                print pt.put_color(ip, "red"), pt.put_color(
-                    u"内网", "red"), pt.put_color(u"外网", "red")
-            else:
-                if result["result"]:
-                    print pt.put_color(ip, "yellow"), pt.put_color(
-                        u"内网", "green"), pt.put_color(u"外网", "red")
-                else:
-                    print pt.put_color(ip, "green"), pt.put_color(
-                        u"内网", "green"), pt.put_color(u"外网", "green")
 
     elif choice == 'b':
         return
