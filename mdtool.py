@@ -9,7 +9,7 @@ import json
 import random
 
 
-def exit(a, b):  # ok
+def exit(a=None, b=None):  # ok
     show_logo()
     sys.exit(pt.put_color(
         random.choice([
@@ -65,7 +65,7 @@ def Main_menu():  # ok
         pro_menu()
 
     elif choice == 'q':
-        exit(1, 1)
+        exit()
 
     elif not choice:
         print pt.put_color(u"[!]操作已取消", "yellow")
@@ -390,7 +390,7 @@ def basic_menu():
         return
 
     elif choice == 'q':
-        exit(1, 1)
+        exit()
 
     elif not choice:
         print pt.put_color(u"[!]操作已取消", "yellow")
