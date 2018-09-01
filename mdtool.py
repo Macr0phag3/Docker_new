@@ -142,7 +142,7 @@ def basic_menu():
             print pt.put_color(u"操作已取消", "yellow")
             goto .basic_menu
 
-        if choice_image not in [str(c) for c in range(i+1)]:
+        elif choice_image not in [str(c) for c in range(i+1)]:
             show_logo()
             print pt.put_color("输入有误, 重新输入", "red")
             goto .choice_image
