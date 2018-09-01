@@ -70,7 +70,7 @@ def Main_menu():  # ok
         exit(1, 1)
 
     elif not choice:
-        print pt.put_color(u"操作已取消", "yellow")
+        print pt.put_color(u"[!]操作已取消", "yellow")
 
     else:
         print pt.put_color("输入有误, 重新输入", "red")
@@ -126,7 +126,7 @@ def basic_menu():
 
         if image_list["code"]:
             print pt.put_color(u"[X]获取虚拟机: %s 的所有镜像失败" % ip, "red")
-            print "  [-]\n", image_list["msg"]
+            print "  [-]", image_list["msg"]
             goto .basic_menu
 
         print u"选择镜像"
@@ -139,12 +139,12 @@ def basic_menu():
         choice_image = raw_input("> ")
         if choice_image == "":
             show_logo()
-            print pt.put_color(u"操作已取消", "yellow")
+            print pt.put_color(u"[!]操作已取消", "yellow")
             goto .basic_menu
 
         elif choice_image not in [str(c) for c in range(i+1)]:
             show_logo()
-            print pt.put_color("输入有误, 重新输入", "red")
+            print pt.put_color("[X]输入有误, 重新输入", "red")
             goto .choice_image
 
         image_name = image_list["result"][int(choice_image)]
@@ -158,13 +158,13 @@ def basic_menu():
                     }})))
 
         if result["code"]:
-            print pt.put_color(u"启动容器失败", "red")
-            print u"原因如下:\n", result["msg"]
-            goto .docker
+            print pt.put_color(u"[X]启动容器失败", "red")
+            print u"  [-]", result["msg"]
+            goto .basic_menu
 
-        print pt.put_color(u"[+]启动容器 %s 成功" % image_name, "green")
-        print u"  [-]位于虚拟机 %s 中" % pt.put_color(ip, "white")
-        print u"  [-]容器分配的 ip 为:", pt.put_color(result["result"]["ip"], "white")
+        print pt.put_color(u"[+]启动镜像 %s 的容器成功" % image_name, "green")
+        print u"  [-]容器位于虚拟机 %s 中" % pt.put_color(ip, "white")
+        print u"  [-]给容器分配的 ip 为:", pt.put_color(result["result"]["ip"], "white")
         print u"  [-]ID 为", pt.put_color(result["result"]["id"], "white")
 
     elif choice == '4':
@@ -196,7 +196,7 @@ def basic_menu():
         exit(1, 1)
 
     elif not choice:
-        print pt.put_color(u"操作已取消", "yellow")
+        print pt.put_color(u"[!]操作已取消", "yellow")
 
     else:
         print pt.put_color(u"输入有误, 重新输入", "red")
