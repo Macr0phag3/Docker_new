@@ -10,9 +10,7 @@ import random
 
 
 def exit(a, b):  # ok
-    if b != 0:
-        show_logo()
-
+    show_logo()
     sys.exit(pt.put_color(
         random.choice([
             "Goodbye", "Have a nice day",
