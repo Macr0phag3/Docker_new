@@ -9,7 +9,7 @@ import json
 import random
 
 
-def abort(a, b):  # ok
+def exit(a, b):  # ok
     if b != 0:
         show_logo()
 
@@ -19,6 +19,11 @@ def abort(a, b):  # ok
             "See you later", "Bye",
             "Farewell", "Cheerio",
         ]), "white"))
+
+
+def abort():
+    show_logo()
+    print pt.put_color(u"操作已取消", "yellow")
 
 
 def colored_choice(num):
@@ -54,9 +59,10 @@ def Main_menu():  # ok
 ==========
 {}: 基本操作
 {}: 更多操作
+{}: 使用说明
 {}: 退出
 ==========
-输入序号> """.format(*[i for i in colored_choice(2) if "b" not in i]))
+输入序号> """.format(*[i for i in colored_choice(3) if "b" not in i]))
 
     show_logo()
     if choice == '0':
@@ -66,7 +72,11 @@ def Main_menu():  # ok
         pro_menu()
 
     elif choice == 'q':
-        abort(1, 1)
+        exit(1, 1)
+
+    elif not choice:
+        abort()
+
     else:
         print pt.put_color("输入有误, 重新输入", "red")
 
@@ -189,7 +199,7 @@ def basic_menu():
         return
 
     elif choice == 'q':
-        abort(1, 1)
+        exit(1, 1)
 
     else:
         print pt.put_color("输入有误, 重新输入", "red")
@@ -197,8 +207,8 @@ def basic_menu():
     goto .network
 
 
-signal.signal(signal.SIGINT, abort)
-signal.signal(signal.SIGTERM, abort)
+signal.signal(signal.SIGINT, exit)
+signal.signal(signal.SIGTERM, exit)
 
 ips = mt.setting["slave_ip"]
 subnet = mt.setting["bridge"]["subnet"]
