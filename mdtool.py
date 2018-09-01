@@ -88,8 +88,8 @@ def basic_menu():
 {}: 回收容器 √
 {}: 查看镜像 √
 {}: 查看容器
-{}: 详细信息
 {}: 检查连接 √
+{}: 详细信息
 {}: 返回
 {}: 退出
 ==================
@@ -301,6 +301,9 @@ def basic_menu():
         images = image_list["result"]
         for i, image in enumerate(images):
             print "%s: %s" % (pt.put_color(str(i), "blue"), image)
+
+    elif choice == "3":
+        pass
 
     elif choice == '4':
         mission = {
