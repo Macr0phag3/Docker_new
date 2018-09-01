@@ -95,7 +95,7 @@ def basic_menu():
 > """.format(*colored_choice(5)))
 
     show_logo()
-    if choice == "1":
+    if choice == "0":
         result = json.loads(mt.ip_assign(subnet))
         if result["code"]:
             print pt.put_color(u"[X]分配 ip 失败", "red")
@@ -130,7 +130,7 @@ def basic_menu():
             goto .basic_menu
 
         print u"选择镜像"
-        label .choice_image
+        label .image_list
         print "=" * 50
         for i, image in enumerate(image_list["result"]):
             print "%s: %s" % (pt.put_color(str(i), "blue"), image)
@@ -145,7 +145,7 @@ def basic_menu():
         elif choice_image not in [str(c) for c in range(i+1)]:
             show_logo()
             print pt.put_color("[X]输入有误, 重新输入", "red")
-            goto .choice_image
+            goto .image_list
 
         image_name = image_list["result"][int(choice_image)]
         result = json.loads(
@@ -166,6 +166,122 @@ def basic_menu():
         print u"  [-]容器位于虚拟机 %s 中" % pt.put_color(ip, "white")
         print u"  [-]给容器分配的 ip 为:", pt.put_color(result["result"]["ip"], "white")
         print u"  [-]ID 为", pt.put_color(result["result"]["id"], "white")
+
+    elif choice == '1':
+        mission = {
+            "mission": "cmd2docker",
+            "commands": {
+                "command": "others_cmd",
+                "arg": []
+            }}
+
+        results = command2all_slaves(ips, "containers_ls")
+        print u"选择虚拟机"
+
+        label .slave_list
+        alive_slave = []
+        empty_slave = []
+
+        print "="*50,
+        for i, result in enumerate(results):
+            print
+            if result["code"]:
+                print "%s: slave: %s" % (i, pt.put_color(ips[i], "red"))
+                print "  [X]error:", result["msg"]
+                goto .basic_menu
+
+            alive_slave.append(i)
+            print "%s: %s" % (pt.put_color(str(i), "blue"), pt.put_color(ips[i], "green"))
+            if result["result"] == []:
+                print pt.put_color("  [!]Empty", "yellow")
+                empty_slave.append(i)
+            else:
+                for j, r in enumerate(result["result"]):
+                    print "  %s: [%s] [%s] [%s]" % (pt.put_color(str(j), "blue"), pt.put_color(r["status"], "white"),
+                                                    pt.put_color(r["ip"], "white"), pt.put_color(r["image name"], "white"))
+
+        print "\n{}: 返回\n{}: 退出".format(*colored_choice(0))
+        print "="*50
+
+        choice_slave = raw_input("> ")
+        if choice_slave == 'b':
+            show_logo()
+            goto .basic_menu
+
+        elif choice_slave == 'q':
+            abort(1, 1)
+
+        elif not choice_slave:
+            print pt.put_color(u"[!]操作已取消", "yellow")
+            goto .slave_list
+
+        elif not choice_slave.isdigit():
+            show_logo()
+            print pt.put_color(u"输入有误, 重新输入", "red")
+            goto .slave_list
+
+        choice_slave = int(choice_slave)
+        if choice_slave not in alive_slave:
+            show_logo()
+            print pt.put_color(u"此虚拟机无法连接, 重新输入", "red")
+            goto .slave_list
+
+        elif choice_slave in empty_slave:
+            show_logo()
+            print pt.put_color(u"此虚拟机无容器, 重新输入", "red")
+            goto .slave_list
+
+        ip = ips[choice_slave]
+        choice_container = raw_input(
+            u"\n选择容器\n=========\n{}: 返回\n{}: 退出\n=========\n> ".format(*colored_choice(0)))
+
+        if choice_container == 'b':
+            show_logo()
+            goto .slave_list
+
+        elif choice_container == 'q':
+            abort(1, 1)
+
+        elif not choice_container:
+            print pt.put_color(u"[!]操作已取消", "yellow")
+            goto .slave_list
+
+        elif not choice_container.isdigit():
+            show_logo()
+            print pt.put_color(u"输入有误, 重新输入", "red")
+            goto .slave_list
+
+        choice_container = int(choice_container)
+        if choice_container not in range(len(results[choice_slave]["result"])):
+            show_logo()
+            print pt.put_color(u"虚拟机: %s 无此容器, 重新输入" % ip, "red")
+            goto .slave_list
+
+        id_or_name = results[choice_slave]["result"][choice_container]["id"]
+        show_logo()
+        print u"[+]回收容器:", id_or_name
+        mission["commands"]["arg"] = [id_or_name, "kill"]
+        print u"  [-]停止容器 ...",
+        result = json.loads(mt.command2slave(ip, json.dumps(mission)))
+
+        if result["code"]:
+            print pt.put_color(u"失败", "red")
+            print u"  [x]" + result["msg"]
+            goto .basic_menu
+
+        print pt.put_color(u"成功", "green")
+        print u"  [-]删除容器 ...",
+        mission["commands"]["arg"] = [id_or_name, "rm"]
+        result = json.loads(mt.command2slave(
+            ip, json.dumps(mission)))
+
+        if result["code"]:
+            print pt.put_color(u"失败", "red")
+            print u"  [x]" + result["msg"]
+            goto .basic_menu
+
+        print pt.put_color(u"成功", "green")
+        print u"[!]完成"
 
     elif choice == '4':
         mission = {
