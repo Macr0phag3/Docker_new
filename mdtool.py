@@ -285,8 +285,6 @@ def basic_menu():
 
     elif choice == "2":
         slaves_info = {}
-        ips = get_setting("slave_ip")
-
         results = command2all_slaves(ips, "images_ls")
         for i, result in enumerate(results):
             slaves_info[ips[i]] = {
