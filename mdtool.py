@@ -283,6 +283,69 @@ def basic_menu():
         print pt.put_color(u"成功", "green")
         print u"[!]完成"
 
+    elif choice == "2":
+        slaves_info = {}
+        ips = get_setting("slave_ip")
+
+        results = command2all_slaves(ips, "images_ls")
+        for i, result in enumerate(results):
+            slaves_info[ips[i]] = {
+                "image": {
+                    "code": 1,
+                    "msg": "",
+                    "images": []
+                },
+                "container": {
+                    "code": 1,
+                    "msg": "",
+                    "containers": []
+                }
+            }
+
+            if result["code"]:
+                slaves_info[ips[i]]["image"]["msg"] = result["msg"]
+            else:
+                slaves_info[ips[i]]["image"]["code"] = 0
+                slaves_info[ips[i]]["image"]["images"] = result["result"]
+
+        results = command2all_slaves(ips, "containers_ls")
+        for i, result in enumerate(results):
+            if result["code"]:
+                slaves_info[ips[i]]["container"]["msg"] = result["msg"]
+            else:
+                slaves_info[ips[i]]["container"]["code"] = 0
+                slaves_info[ips[i]]["container"]["containers"] = result["result"]
+
+        for ip in ips:
+            print "[+]slave: "+pt.put_color(ip, "white")
+
+            images_info = slaves_info[ip]["image"]
+            if images_info["code"]:
+                print pt.put_color("  [X]images", "red")
+                print "    [-]error: "+images_info["msg"]
+            else:
+                print "  [-]images(%s)" % pt.put_color(str(len(images_info["images"])), "blue")
+                for image in images_info["images"]:
+                    print "    [-]"+image
+
+            containers_info = slaves_info[ip]["container"]
+            if containers_info["code"]:
+                print pt.put_color("\n  [X]containers", "red")
+                print "    [-]error: "+containers_info["msg"]
+            else:
+                print "\n  [-]containers(%s)" % pt.put_color(
+                    str(len(containers_info["containers"])), "blue")
+                for container in containers_info["containers"]:
+                    print "    [-]short id: "+pt.put_color(container["id"][:6], "white")
+                    print "      [-]ip: "+pt.put_color(container["ip"], "white")
+                    print "      [-]id: "+container["id"]
+                    print "      [-]status: "+pt.put_color(container["status"],
+                                                           "green" if container["status"] == "running" else "yellow")
+                    print "      [-]image name: "+pt.put_color(container["image name"], "white")
+                    print
+
+            print "-"*50
+
     elif choice == '4':
         mission = {
             "mission": "cmd2slave",
