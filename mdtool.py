@@ -21,11 +21,6 @@ def exit(a, b):  # ok
         ]), "white"))
 
 
-def abort():
-    show_logo()
-    print pt.put_color(u"操作已取消", "yellow")
-
-
 def colored_choice(num):
     num_color = [pt.put_color(str(i), "blue") for i in range(num)]
     alpha_color = [pt.put_color(i, "yellow") for i in ['b', 'q']]
@@ -75,7 +70,7 @@ def Main_menu():  # ok
         exit(1, 1)
 
     elif not choice:
-        abort()
+        print pt.put_color(u"操作已取消", "yellow")
 
     else:
         print pt.put_color("输入有误, 重新输入", "red")
@@ -85,7 +80,7 @@ def Main_menu():  # ok
 
 @with_goto
 def basic_menu():
-    label .network
+    label .basic_menu
     choice = raw_input("""
 ==================
 输入数字以继续:
@@ -100,20 +95,19 @@ def basic_menu():
 > """.format(*colored_choice(5)))
 
     show_logo()
-
     if choice == "1":
         result = json.loads(mt.ip_assign(subnet))
         if result["code"]:
-            print pt.put_color(u"分配 ip 失败", "red")
-            print u"原因如下:\n", result["msg"]
-            goto .docker
+            print pt.put_color(u"[X]分配 ip 失败", "red")
+            print "  [-]", result["msg"]
+            goto .basic_menu
 
         container_ip = result["result"]
         result = json.loads(mt.check_load())
         if result["code"]:
-            print pt.put_color(u"负载查询失败", "red")
-            print u"原因如下:\n", result["msg"]
-            goto .docker
+            print pt.put_color(u"[X]负载查询失败", "red")
+            print "  [-]", result["msg"]
+            goto .basic_menu
 
         min_load = 100
         for i in result["result"]:
@@ -131,22 +125,22 @@ def basic_menu():
             }})))
 
         if image_list["code"]:
-            print pt.put_color(u"获取虚拟机: %s 的所有镜像失败" % ip, "red")
-            print u"原因如下:\n", image_list["msg"]
-            goto .docker
+            print pt.put_color(u"[X]获取虚拟机: %s 的所有镜像失败" % ip, "red")
+            print "  [-]\n", image_list["msg"]
+            goto .basic_menu
 
         print u"选择镜像"
         label .choice_image
-        print "============="
+        print "=" * 50
         for i, image in enumerate(image_list["result"]):
             print "%s: %s" % (pt.put_color(str(i), "blue"), image)
-        print "============="
+        print "=" * 50
 
         choice_image = raw_input("> ")
         if choice_image == "":
             show_logo()
             print pt.put_color(u"操作已取消", "yellow")
-            goto .docker
+            goto .basic_menu
 
         if choice_image not in [str(c) for c in range(i+1)]:
             show_logo()
@@ -164,8 +158,8 @@ def basic_menu():
                     }})))
 
         if result["code"]:
-            print pt.put_color("启动容器失败", "red")
-            print "原因如下:\n", result["msg"]
+            print pt.put_color(u"启动容器失败", "red")
+            print u"原因如下:\n", result["msg"]
             goto .docker
 
         print pt.put_color(u"[+]启动容器 %s 成功" % image_name, "green")
@@ -201,8 +195,11 @@ def basic_menu():
     elif choice == 'q':
         exit(1, 1)
 
+    elif not choice:
+        print pt.put_color(u"操作已取消", "yellow")
+
     else:
-        print pt.put_color("输入有误, 重新输入", "red")
+        print pt.put_color(u"输入有误, 重新输入", "red")
 
     goto .network
 
