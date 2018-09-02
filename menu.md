@@ -88,6 +88,15 @@ Main
       [-]镜像名:
 ```
 
+```
+[-]name
+  [-]id:
+  [-]状态:
+  [-]时间:
+  [-]ip:
+  [-]镜像名:
+```
+
 
 ```
 docker images|grep none|awk '{print $3}'|xargs docker rmi

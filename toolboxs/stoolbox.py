@@ -240,12 +240,14 @@ def containers_ls():  # ok
             {
                 "id": "326925f79873ea6a5fbf2b3e112734c697b9c6175798b2466f623f8712d41002",
                 "status": "running",
+                "start time": "Up 2 minutes",
                 "ip": "192.168.12.67",
                 "image name": "image_name"
             },
             {
                 "id": "20014d2178f326f6642b8975716c9b796c437211e3b2fbf5a6ae37897f529623",
                 "status": "paused",
+                "start time": "Up 1 minutes",
                 "ip": "192.168.12.137",
                 "image name": "image_name"
             }
@@ -270,6 +272,7 @@ def containers_ls():  # ok
             dicts["result"].append({
                 "id": container["Id"],
                 "status": container["State"],
+                "start time":  container["Status"],
                 "ip": container_ip,
                 "image name": container["Image"]
             })
