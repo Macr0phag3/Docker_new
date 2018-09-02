@@ -327,7 +327,28 @@ def basic_menu():
 
     elif choice == "5":
         slaves_info = {}
-        results = command2all_slaves(ips, "images_ls")
+        mission = [
+            {
+                "mission": "cmd2docker",
+                "commands":
+                {
+                    "command": "images_ls",
+                    "arg": [],
+                }
+            },
+            {
+                "mission": "cmd2docker",
+                "commands":
+                {
+                    "command": "containers_ls",
+                    "arg": [],
+                }
+            }
+        ]
+        #results = command2all_slaves(ips, "images_ls")
+        for ip in ips:
+            command2slave(ip, json.dumps(mission))
+
         for i, result in enumerate(results):
             slaves_info[ips[i]] = {
                 "image": {
