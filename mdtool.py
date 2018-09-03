@@ -180,6 +180,7 @@ def basic_menu():
         alive_slave = []
         empty_slave = []
 
+        results = []
         for i, ip in enumerate(ips):
             result = json.loads(
                 mt.command2slave(
@@ -189,6 +190,8 @@ def basic_menu():
                             "command": "containers_ls",
                             "arg": []
                         }})))
+
+            results.append(result)
 
             if result["code"]:
                 print u"%s: 虚拟机: %s" % (i, pt.put_color(ip, "red"))
@@ -214,7 +217,7 @@ def basic_menu():
             goto .basic_menu
 
         elif choice_slave == 'q':
-            abort(1, 1)
+            exit()
 
         elif not choice_slave:
             print pt.put_color(u"[!]操作已取消", "yellow")
@@ -245,7 +248,7 @@ def basic_menu():
             goto .slave_list
 
         elif choice_container == 'q':
-            abort(1, 1)
+            exit()
 
         elif not choice_container:
             print pt.put_color(u"[!]操作已取消", "yellow")
