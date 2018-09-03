@@ -98,7 +98,7 @@ def recvd_msg(conn):  # ok
         results = recvd_cmd(mission)
 
     elif type(mission) == list:  # 多任务模式
-        results = json.dumps([json.loads(recvd_cmd(mission)) for m in mission])
+        results = json.dumps([json.loads(recvd_cmd(m)) for m in mission])
 
     else:
         results = json.dumps({
