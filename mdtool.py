@@ -372,7 +372,6 @@ def basic_menu():
                 for image in result[0]["result"]:
                     print "    [-]"+image
 
-            containers_info = slaves_info[ip]["container"]
             if result[1]["code"]:
                 print pt.put_color("\n  [X]containers", "red")
                 print "    [-]error: "+result[1]["msg"]
