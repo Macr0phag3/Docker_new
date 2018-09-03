@@ -187,7 +187,7 @@ def basic_menu():
                         "mission": "cmd2docker",
                         "commands": {
                             "command": "containers_ls",
-                            "arg": [image_name, container_ip]
+                            "arg": []
                         }})))
 
             if result["code"]:
@@ -238,7 +238,7 @@ def basic_menu():
 
         ip = ips[choice_slave]
         choice_container = raw_input(
-            u"\n选择容器\n=========\n{}: 返回\n{}: 退出\n=========\n> ".format(*colored_choice(0)))
+            "\n选择容器\n=========\n{}: 返回\n{}: 退出\n=========\n> ".format(*colored_choice(0)))
 
         if choice_container == 'b':
             show_logo()
