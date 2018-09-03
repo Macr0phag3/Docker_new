@@ -185,7 +185,7 @@ def basic_menu():
         for i, result in enumerate(results):
             print
             if result["code"]:
-                print "%s: slave: %s" % (i, pt.put_color(ips[i], "red"))
+                print u"%s: 虚拟机: %s" % (i, pt.put_color(ips[i], "red"))
                 print "  [X]error:", result["msg"]
                 goto .basic_menu
 
@@ -362,29 +362,29 @@ def basic_menu():
 
             result = json.loads(mt.command2slave(ip, json.dumps(mission)))
             print result
-            print "[+]slave: "+pt.put_color(ip, "white")
+            print u"[+]虚拟机: "+pt.put_color(ip, "white")
 
             if result[0]["code"]:
-                print pt.put_color("  [X]images", "red")
+                print pt.put_color(u"  [X]镜像", "red")
                 print "    [-]error: "+result[0]["msg"]
             else:
-                print "  [-]images(%s)" % pt.put_color(str(len(result[0]["result"])), "blue")
+                print u"  [-]镜像(%s)" % pt.put_color(str(len(result[0]["result"])), "blue")
                 for image in result[0]["result"]:
                     print "    [-]"+image
 
             if result[1]["code"]:
-                print pt.put_color("\n  [X]containers", "red")
+                print pt.put_color(u"\n  [X]容器", "red")
                 print "    [-]error: "+result[1]["msg"]
             else:
-                print "\n  [-]containers(%s)" % pt.put_color(
+                print u"\n  [-]容器(%s)" % pt.put_color(
                     str(len(result[1]["result"])), "blue")
                 for container in result[1]["result"]:
                     print "    [-]short id: "+pt.put_color(container["id"][:6], "white")
                     print "      [-]ip: "+pt.put_color(container["ip"], "white")
                     print "      [-]id: "+container["id"]
-                    print "      [-]status: "+pt.put_color(container["status"],
-                                                           "green" if container["status"] == "running" else "yellow")
-                    print "      [-]image name: "+pt.put_color(container["image name"], "white")
+                    print u"      [-]状态: "+pt.put_color(container["status"],
+                                                        "green" if container["status"] == "running" else "yellow")
+                    print u"      [-]镜像名: "+pt.put_color(container["image name"], "white")
                     print
 
             print "-"*50
