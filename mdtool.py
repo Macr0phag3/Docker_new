@@ -401,7 +401,7 @@ def basic_menu():
     else:
         print pt.put_color(u"输入有误, 重新输入", "red")
 
-    goto .network
+    goto .basic_menu
 
 
 signal.signal(signal.SIGINT, exit)
