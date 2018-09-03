@@ -95,7 +95,7 @@ def recvd_msg(conn):  # ok
     mission = json.loads(msg)
 
     if type(mission) == dict:  # 单任务模式
-        recvd_cmd(mission)
+        results = recvd_cmd(mission)
 
     elif type(mission) == list:  # 多任务模式
         results = json.dumps([json.loads(recvd_cmd(mission)) for m in mission])
@@ -107,6 +107,7 @@ def recvd_msg(conn):  # ok
             "result": "mission's type must be dict or list"
         })
 
+    print results
     conn.sendall(results)
 
 
