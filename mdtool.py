@@ -360,8 +360,8 @@ def basic_menu():
                 }
             }
 
-            result = mt.command2slave(ip, json.dumps(mission))
-
+            result = json.loads(mt.command2slave(ip, json.dumps(mission)))
+            print result
             print "[+]slave: "+pt.put_color(ip, "white")
 
             if result[0]["code"]:
