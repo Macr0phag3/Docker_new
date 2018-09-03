@@ -347,7 +347,7 @@ def basic_menu():
         ]
         #results = command2all_slaves(ips, "images_ls")
         for ip in ips:
-            slaves_info[ips[i]] = {
+            slaves_info[ip] = {
                 "image": {
                     "code": 1,
                     "msg": "",
@@ -359,21 +359,19 @@ def basic_menu():
                     "containers": []
                 }
             }
-            result = command2slave(ip, json.dumps(mission))
-            for i, result in enumerate(results):
-                if result["code"]:
-                    slaves_info[ips[i]]["image"]["msg"] = result["msg"]
-                else:
-                    slaves_info[ips[i]]["image"]["code"] = 0
-                    slaves_info[ips[i]]["image"]["images"] = result["result"]
 
-        results = command2all_slaves(ips, "containers_ls")
-        for i, result in enumerate(results):
-            if result["code"]:
-                slaves_info[ips[i]]["container"]["msg"] = result["msg"]
+            result = command2slave(ip, json.dumps(mission))
+            if result[0]["code"]:
+                slaves_info[ip]["image"]["msg"] = result[0]["msg"]
             else:
-                slaves_info[ips[i]]["container"]["code"] = 0
-                slaves_info[ips[i]]["container"]["containers"] = result["result"]
+                slaves_info[ip]["image"]["code"] = 0
+                slaves_info[ip]["image"]["images"] = result[0]["result"]
+
+            if result[1]["code"]:
+                slaves_info[ip]["container"]["msg"] = result[1]["msg"]
+            else:
+                slaves_info[ip]["container"]["code"] = 0
+                slaves_info[ip]["container"]["containers"] = result[1]["result"]
 
         for ip in ips:
             print "[+]slave: "+pt.put_color(ip, "white")
