@@ -345,7 +345,7 @@ def basic_menu():
                 }
             }
         ]
-        #results = command2all_slaves(ips, "images_ls")
+
         for ip in ips:
             slaves_info[ip] = {
                 "image": {
@@ -361,38 +361,25 @@ def basic_menu():
             }
 
             result = command2slave(ip, json.dumps(mission))
-            if result[0]["code"]:
-                slaves_info[ip]["image"]["msg"] = result[0]["msg"]
-            else:
-                slaves_info[ip]["image"]["code"] = 0
-                slaves_info[ip]["image"]["images"] = result[0]["result"]
 
-            if result[1]["code"]:
-                slaves_info[ip]["container"]["msg"] = result[1]["msg"]
-            else:
-                slaves_info[ip]["container"]["code"] = 0
-                slaves_info[ip]["container"]["containers"] = result[1]["result"]
-
-        for ip in ips:
             print "[+]slave: "+pt.put_color(ip, "white")
 
-            images_info = slaves_info[ip]["image"]
-            if images_info["code"]:
+            if result[0]["code"]:
                 print pt.put_color("  [X]images", "red")
-                print "    [-]error: "+images_info["msg"]
+                print "    [-]error: "+result[0]["msg"]
             else:
-                print "  [-]images(%s)" % pt.put_color(str(len(images_info["images"])), "blue")
-                for image in images_info["images"]:
+                print "  [-]images(%s)" % pt.put_color(str(len(result[0]["result"])), "blue")
+                for image in result[0]["result"]:
                     print "    [-]"+image
 
             containers_info = slaves_info[ip]["container"]
-            if containers_info["code"]:
+            if result[1]["code"]:
                 print pt.put_color("\n  [X]containers", "red")
-                print "    [-]error: "+containers_info["msg"]
+                print "    [-]error: "+result[1]["msg"]
             else:
                 print "\n  [-]containers(%s)" % pt.put_color(
-                    str(len(containers_info["containers"])), "blue")
-                for container in containers_info["containers"]:
+                    str(len(result[1]["result"])), "blue")
+                for container in result[1]["result"]:
                     print "    [-]short id: "+pt.put_color(container["id"][:6], "white")
                     print "      [-]ip: "+pt.put_color(container["ip"], "white")
                     print "      [-]id: "+container["id"]
