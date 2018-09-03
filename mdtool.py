@@ -55,7 +55,7 @@ def Main_menu():  # ok
 {}: 使用说明
 {}: 退出
 ==========
-输入序号> """.format(*[i for i in colored_choice(3) if "b" not in i]))
+> """.format(*[i for i in colored_choice(3) if "b" not in i]))
 
     show_logo()
     if choice == '0':
@@ -174,23 +174,29 @@ def basic_menu():
                 "arg": []
             }}
 
-        results = command2all_slaves(ips, "containers_ls")
-        print u"选择虚拟机"
-
         label .slave_list
+        print u"选择虚拟机"
+        print "="*50,
         alive_slave = []
         empty_slave = []
 
-        print "="*50,
-        for i, result in enumerate(results):
-            print
+        for i, ip in enumerate(ips):
+            result = json.loads(
+                mt.command2slave(
+                    ip, json.dumps({
+                        "mission": "cmd2docker",
+                        "commands": {
+                            "command": "containers_ls",
+                            "arg": [image_name, container_ip]
+                        }})))
+
             if result["code"]:
-                print u"%s: 虚拟机: %s" % (i, pt.put_color(ips[i], "red"))
+                print u"%s: 虚拟机: %s" % (i, pt.put_color(ip, "red"))
                 print "  [X]error:", result["msg"]
                 goto .basic_menu
 
             alive_slave.append(i)
-            print "%s: %s" % (pt.put_color(str(i), "blue"), pt.put_color(ips[i], "green"))
+            print "%s: %s" % (pt.put_color(str(i), "blue"), pt.put_color(ip, "green"))
             if result["result"] == []:
                 print pt.put_color("  [!]Empty", "yellow")
                 empty_slave.append(i)
@@ -382,6 +388,7 @@ def basic_menu():
                     print "    [-]short id: "+pt.put_color(container["id"][:6], "white")
                     print "      [-]ip: "+pt.put_color(container["ip"], "white")
                     print "      [-]id: "+container["id"]
+                    print u"      [-]启动时间点: "+container["start time"]
                     print u"      [-]状态: "+pt.put_color(container["status"],
                                                         "green" if container["status"] == "running" else "yellow")
                     print u"      [-]镜像名: "+pt.put_color(container["image name"], "white")
