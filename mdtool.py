@@ -64,6 +64,9 @@ def Main_menu():  # ok
     elif choice == '1':
         pro_menu()
 
+    elif choice == '2':
+        intro_menu()
+
     elif choice == 'q':
         exit()
 
@@ -196,7 +199,6 @@ def basic_menu():
             if result["code"]:
                 print u"%s: 虚拟机: %s" % (i, pt.put_color(ip, "red"))
                 print "  [X]error:", result["msg"]
-                goto .basic_menu
 
             alive_slave.append(i)
             print "%s: %s" % (pt.put_color(str(i), "blue"), pt.put_color(ip, "green"))
@@ -231,12 +233,12 @@ def basic_menu():
         choice_slave = int(choice_slave)
         if choice_slave not in alive_slave:
             show_logo()
-            print pt.put_color(u"此虚拟机无法连接, 重新输入", "red")
+            print pt.put_color(u"此虚拟机无法连接, 重新选择", "red")
             goto .slave_list
 
         elif choice_slave in empty_slave:
             show_logo()
-            print pt.put_color(u"此虚拟机无容器, 重新输入", "red")
+            print pt.put_color(u"此虚拟机无容器, 重新选择", "red")
             goto .slave_list
 
         ip = ips[choice_slave]
@@ -262,7 +264,7 @@ def basic_menu():
         choice_container = int(choice_container)
         if choice_container not in range(len(results[choice_slave]["result"])):
             show_logo()
-            print pt.put_color(u"虚拟机: %s 无此容器, 重新输入" % ip, "red")
+            print pt.put_color(u"虚拟机: %s 无此容器, 重新选择" % ip, "red")
             goto .slave_list
 
         id_or_name = results[choice_slave]["result"][choice_container]["id"]
@@ -411,6 +413,14 @@ def basic_menu():
         print pt.put_color(u"输入有误, 重新输入", "red")
 
     goto .basic_menu
+
+
+def pro_menu():
+    print u"施工中..."
+
+
+def intro_menu():
+    print u"施工中..."
 
 
 signal.signal(signal.SIGINT, exit)
