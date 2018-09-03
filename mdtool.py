@@ -143,7 +143,7 @@ def basic_menu():
 
         elif choice_image not in [str(c) for c in range(i+1)]:
             show_logo()
-            print pt.put_color("[X]输入有误, 重新输入", "red")
+            print pt.put_color(u"[X]输入有误, 重新输入", "red")
             goto .image_list
 
         image_name = image_list["result"][int(choice_image)]
