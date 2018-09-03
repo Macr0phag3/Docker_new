@@ -53,7 +53,7 @@ def ip_used(subnet):  # ok
         }
     }
 
-    result = json.loads(setting["slave_ip"])
+    result = setting["slave_ip"]
     if result["code"]:
         dicts["msg"] = result["msg"]
     else:
@@ -193,7 +193,7 @@ def check_load():
         }
     }
 
-    result = json.loads(setting["slave_ip"])
+    result = setting["slave_ip"]
     if result["code"]:
         dicts["msg"] = result["msg"]
     else:
