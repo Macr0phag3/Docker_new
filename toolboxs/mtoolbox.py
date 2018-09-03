@@ -53,21 +53,17 @@ def ip_used(subnet):  # ok
         }
     }
 
-    result = setting["slave_ip"]
-    if result["code"]:
-        dicts["msg"] = result["msg"]
-    else:
-        ips = result["result"]
-        dicts["result"] = ips[:]
-        dicts["code"] = 0
+    ips = setting["slave_ip"]
+    dicts["result"] = ips[:]
+    dicts["code"] = 0
 
-        for ip in ips:
-            result = json.loads(command2slave(ip, json.dumps(mission)))
-            if result["code"]:
-                dicts["msg"] += "get ip from %s failed\n%s\n" % (ip, result["msg"])
-                dicts["code"] = 1
-            else:
-                dicts["result"].extend(result["result"])
+    for ip in ips:
+        result = json.loads(command2slave(ip, json.dumps(mission)))
+        if result["code"]:
+            dicts["msg"] += "get ip from %s failed\n%s\n" % (ip, result["msg"])
+            dicts["code"] = 1
+        else:
+            dicts["result"].extend(result["result"])
 
     return json.dumps(dicts)
 
@@ -193,21 +189,17 @@ def check_load():
         }
     }
 
-    result = setting["slave_ip"]
-    if result["code"]:
-        dicts["msg"] = result["msg"]
-    else:
-        ips = result["result"]
-        dicts["code"] = 0
-        for ip in ips:
-            result = json.loads(command2slave(ip, json.dumps(mission)))
-            if result["code"]:
-                dicts["msg"] += "get load from %s failed\n%s\n" % (ip, result["msg"])
-                dicts["code"] = 1
-            else:
-                dicts["result"].append({
-                    ip: result["result"]
-                })
+    ips = setting["slave_ip"]
+    dicts["code"] = 0
+    for ip in ips:
+        result = json.loads(command2slave(ip, json.dumps(mission)))
+        if result["code"]:
+            dicts["msg"] += "get load from %s failed\n%s\n" % (ip, result["msg"])
+            dicts["code"] = 1
+        else:
+            dicts["result"].append({
+                ip: result["result"]
+            })
 
     return json.dumps(dicts)
 
