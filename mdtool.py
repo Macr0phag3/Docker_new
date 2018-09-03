@@ -367,7 +367,6 @@ def basic_menu():
             }
 
             result = json.loads(mt.command2slave(ip, json.dumps(mission)))
-            print result
             print u"[+]虚拟机: "+pt.put_color(ip, "white")
 
             if result[0]["code"]:

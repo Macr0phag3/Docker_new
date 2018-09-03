@@ -107,7 +107,6 @@ def recvd_msg(conn):  # ok
             "result": "mission's type must be dict or list"
         })
 
-    print results
     conn.sendall(results)
 
 
