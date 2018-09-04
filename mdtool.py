@@ -316,18 +316,18 @@ def basic_menu():
             "mission": "cmd2docker",
             "commands": {
                 "command": "containers_ls",
-                "arg": [subnet]
+                "arg": []
             }
         }
 
         results = []
-        for ip in ips:
+        for i, ip in enumerate(ips):
             result = json.loads(mt.command2slave(ip, json.dumps(mission)))
             if result["code"]:
                 print u"[X]获取虚拟机 %s 的所有容器失败" % ip
                 continue
 
-            results.append(result["result"])
+            results.extend(result["result"])
         print results
 
     elif choice == '4':

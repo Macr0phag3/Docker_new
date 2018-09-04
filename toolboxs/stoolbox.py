@@ -274,7 +274,8 @@ def containers_ls():  # ok
                 "status": container["State"],
                 "start time":  container["Status"],
                 "ip": container_ip,
-                "image name": container["Image"]
+                "image name": container["Image"],
+                "slave ip": setting["bridge"]["self_ip"],
             })
 
         dicts["code"] = 0
