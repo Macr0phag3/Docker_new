@@ -312,7 +312,23 @@ def basic_menu():
             print "%s: %s" % (pt.put_color(str(i), "blue"), image)
 
     elif choice == "3":
-        pass
+        mission = {
+            "mission": "cmd2docker",
+            "commands": {
+                "command": "containers_ls",
+                "arg": [subnet]
+            }
+        }
+
+        results = []
+        for ip in ips:
+            result = json.loads(mt.command2slave(ip, json.dumps(mission)))
+            if result["code"]:
+                print u"[X]获取虚拟机 %s 的所有容器失败" % ip
+                continue
+
+            results.append(result["result"])
+        print results
 
     elif choice == '4':
         mission = {
