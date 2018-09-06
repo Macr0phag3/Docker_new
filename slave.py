@@ -151,7 +151,6 @@ while 1:
             conn.sendall(msg)
 
     except KeyboardInterrupt:
-
         break
 
     except Exception, e:
