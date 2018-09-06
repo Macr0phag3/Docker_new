@@ -149,6 +149,10 @@ while 1:
             msg = u"来自 %s 的非法访问. silence is gold..." % from_ip
             print pt.put_color(msg, "yellow")
             conn.sendall(msg)
+
+    except KeyboardInterrupt:
+        break
+
     except Exception, e:
         if "Keyboard" not in str(e):
             print pt.put_color(u"出现一个隐藏问题\n  [-]"+str(e), "red")
@@ -156,7 +160,8 @@ while 1:
             pt.log(traceback.format_exc(), level="error",
                    description="slave reported an error", path=".slave_log")
 
-        print pt.put_color('slave is offline', "red")
         break
 
     conn.close()
+
+print pt.put_color('slave is offline', "red")
