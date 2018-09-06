@@ -84,7 +84,6 @@ def basic_menu():
     label .basic_menu
     choice = raw_input("""
 ==================
-输入数字以继续:
 {}: 分配容器 √
 {}: 回收容器 √
 {}: 查看镜像 √
@@ -179,7 +178,7 @@ def basic_menu():
 
         label .slave_list
         print u"选择虚拟机"
-        print "="*50,
+        print "="*50
         alive_slave = []
         empty_slave = []
 
