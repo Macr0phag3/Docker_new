@@ -129,10 +129,10 @@ def basic_menu():
 
         print u"选择镜像"
         label .image_list
-        print "=" * 50
+        print "-" * 50
         for i, image in enumerate(image_list["result"]):
             print "%s: %s" % (pt.put_color(str(i), "cyan"), image)
-        print "=" * 50
+        print "-" * 50
 
         choice_image = raw_input("> ")
         if choice_image == "":
@@ -205,8 +205,8 @@ def basic_menu():
                 for j, r in enumerate(result["result"]):
                     print "  %s: [%s] [%s] [%s]" % (pt.put_color(str(j), "cyan"), pt.put_color(r["status"], "white"),
                                                     pt.put_color(r["ip"], "white"), pt.put_color(r["image name"], "white"))
-
-        print "\n{}: 返回\n{}: 退出".format(*colored_choice(0))
+            print
+        print "{}: 返回\n{}: 退出".format(*colored_choice(0))
         print "-"*50
 
         choice_slave = raw_input("> ")
