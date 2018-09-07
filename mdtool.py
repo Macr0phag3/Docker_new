@@ -132,13 +132,16 @@ def basic_menu():
         print "-" * 50
         for i, image in enumerate(image_list["result"]):
             print "%s: %s" % (pt.put_color(str(i), "cyan"), image)
+        print "{}: 返回\n{}: 退出".format(*colored_choice(0))
         print "-" * 50
 
         choice_image = raw_input("> ")
-        if choice_image == "":
-            show_logo()
-            print pt.put_color(u"[!]操作已取消", "yellow")
+
+        if choice_image == "b":
             goto .basic_menu
+
+        elif choice_image == "q":
+            exit()
 
         elif choice_image not in [str(c) for c in range(i+1)]:
             show_logo()
