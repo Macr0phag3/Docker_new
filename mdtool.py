@@ -324,8 +324,8 @@ def basic_menu():
             print u"  [-]状态: "+pt.put_color(container["status"],
                                             "green" if container["status"] == "running" else "yellow")
             print u"  [-]启动时间点: "+container["start time"]
-            print "  [-]容器 ip: "+pt.put_color(container["ip"], "white")
-            print "  [-]所在虚拟机 ip: "+pt.put_color(container["slave ip"], "white")
+            print u"  [-]容器 ip: "+pt.put_color(container["ip"], "white")
+            print u"  [-]所在虚拟机 ip: "+pt.put_color(container["slave ip"], "white")
             print u"  [-]镜像名: "+pt.put_color(container["image name"], "white")
         print "-"*50
 
@@ -408,7 +408,7 @@ def basic_menu():
                     print u"      [-]启动时间点: "+container["start time"]
                     print u"      [-]状态: "+pt.put_color(container["status"],
                                                         "green" if container["status"] == "running" else "yellow")
-                    print "      [-]容器 ip: "+pt.put_color(container["ip"], "white")
+                    print u"      [-]容器 ip: "+pt.put_color(container["ip"], "white")
                     print "      [-]id: "+container["id"]
                     print u"      [-]镜像名: "+pt.put_color(container["image name"], "white")
             print "-"*50
