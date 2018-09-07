@@ -421,9 +421,10 @@ def basic_menu():
                     print u"      [-]状态: "+pt.put_color(container["status"],
                                                         "green" if container["status"] == "running" else "yellow")
                     print u"      [-]镜像名: "+pt.put_color(container["image name"], "white")
-                    print
-
             print "-"*50
+
+
+print
 
     elif choice == 'b':
         return
