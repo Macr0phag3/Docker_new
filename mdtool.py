@@ -138,6 +138,7 @@ def basic_menu():
         choice_image = raw_input("> ")
 
         if choice_image == "b":
+            show_logo()
             goto .basic_menu
 
         elif choice_image == "q":
