@@ -317,7 +317,6 @@ def basic_menu():
 
             results.extend(result["result"])
 
-        print "-"*50
         for i, container in enumerate(results):
             print "%s. %s" % (i, pt.put_color(container["id"][:6], "white"))
             print "  [-]id: "+container["id"]
@@ -327,7 +326,7 @@ def basic_menu():
             print u"  [-]容器 ip: "+pt.put_color(container["ip"], "white")
             print u"  [-]所在虚拟机 ip: "+pt.put_color(container["slave ip"], "white")
             print u"  [-]镜像名: "+pt.put_color(container["image name"], "white")
-        print "-"*50
+            print "-"*50, '\n'
 
     elif choice == '4':
         mission = {
@@ -411,7 +410,7 @@ def basic_menu():
                     print u"      [-]容器 ip: "+pt.put_color(container["ip"], "white")
                     print "      [-]id: "+container["id"]
                     print u"      [-]镜像名: "+pt.put_color(container["image name"], "white")
-            print "-"*50
+            print "-"*50, '\n'
 
     elif choice == 'b':
         return
