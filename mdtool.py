@@ -318,7 +318,8 @@ def basic_menu():
             results.extend(result["result"])
 
         for i, container in enumerate(results):
-            print "%s. %s" % (i, pt.put_color(container["id"][:6], "white"))
+            print "%s. %s" % (pt.put_color(str(i), "blue"),
+                              pt.put_color(container["id"][:6], "white"))
             print "  [-]id: "+container["id"]
             print u"  [-]状态: "+pt.put_color(container["status"],
                                             "green" if container["status"] == "running" else "yellow")
