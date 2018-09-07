@@ -329,13 +329,14 @@ def basic_menu():
             results.extend(result["result"])
 
         print "-"*50
-        for container in results:
-            print "[-]short id: "+pt.put_color(container["id"][:6], "white")
-            print "  [-]ip: "+pt.put_color(container["ip"], "white")
+        for i, container in enumerate(results):
+            print "%s. %s" % (i, pt.put_color(container["id"][:6], "white"))
             print "  [-]id: "+container["id"]
-            print u"  [-]启动时间点: "+container["start time"]
             print u"  [-]状态: "+pt.put_color(container["status"],
                                             "green" if container["status"] == "running" else "yellow")
+            print u"  [-]启动时间点: "+container["start time"]
+            print "  [-]容器 ip: "+pt.put_color(container["ip"], "white")
+            print "  [-]所在虚拟机 ip: "+pt.put_color(container["slave ip"], "white")
             print u"  [-]镜像名: "+pt.put_color(container["image name"], "white")
         print "-"*50
 
@@ -415,11 +416,11 @@ def basic_menu():
                     str(len(result[1]["result"])), "blue")
                 for container in result[1]["result"]:
                     print "    [-]short id: "+pt.put_color(container["id"][:6], "white")
-                    print "      [-]ip: "+pt.put_color(container["ip"], "white")
-                    print "      [-]id: "+container["id"]
                     print u"      [-]启动时间点: "+container["start time"]
                     print u"      [-]状态: "+pt.put_color(container["status"],
                                                         "green" if container["status"] == "running" else "yellow")
+                    print "      [-]容器 ip: "+pt.put_color(container["ip"], "white")
+                    print "      [-]id: "+container["id"]
                     print u"      [-]镜像名: "+pt.put_color(container["image name"], "white")
             print "-"*50
 

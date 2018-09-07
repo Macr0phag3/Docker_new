@@ -89,8 +89,8 @@ Main
 ```
 
 ```
-[-]name
-  [-]short id:
+1. short id:
+  [-]id
   [-]状态:
   [-]时间:
   [-]容器 ip:
