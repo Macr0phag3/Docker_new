@@ -64,7 +64,7 @@ def recvd_cmd(mission):
         print pt.put_color(u"无法执行此任务: %s" % commands, "red")
         return json.dumps({
             "code": 1,
-            "msg": "This mission: commands is out of slave's ability...",
+            "msg": "This mission's commands is out of slave's ability...",
             "result": ""
         })
 
