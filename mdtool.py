@@ -423,9 +423,6 @@ def basic_menu():
                     print u"      [-]镜像名: "+pt.put_color(container["image name"], "white")
             print "-"*50
 
-
-print
-
     elif choice == 'b':
         return
 
