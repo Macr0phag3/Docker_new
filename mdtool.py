@@ -327,7 +327,17 @@ def basic_menu():
                 continue
 
             results.extend(result["result"])
-        print results
+
+        print "-"*50
+        for container in results:
+            print "    [-]short id: "+pt.put_color(container["id"][:6], "white")
+            print "      [-]ip: "+pt.put_color(container["ip"], "white")
+            print "      [-]id: "+container["id"]
+            print u"      [-]启动时间点: "+container["start time"]
+            print u"      [-]状态: "+pt.put_color(container["status"],
+                                                "green" if container["status"] == "running" else "yellow")
+            print u"      [-]镜像名: "+pt.put_color(container["image name"], "white")
+        print "-"*50
 
     elif choice == '4':
         mission = {
