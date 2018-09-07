@@ -406,29 +406,29 @@ def basic_menu():
             result = json.loads(mt.command2slave(ip, json.dumps(mission)))
             print u"[+]虚拟机: "+pt.put_color(ip, "white")
 
-            if result[1]["code"]:
-                print pt.put_color(u"  [X]镜像", "red")
+            if result[0]["code"]:
+                print pt.put_color(u"  [X]负载情况", "red")
                 print "    [-]error: "+result[0]["msg"]
             else:
-                print u"  [-]拥有镜像(%s)" % pt.put_color(str(len(result[0]["result"])), "cyan")
-                for image in result[0]["result"]:
-                    print "    [-]"+image
+                print u"  [-]负载情况"
+                print "    [-]cpu: " + put_color(str(result[0]["result"]["cpu"]), "blue") + "%"
+                print "    [-]mem: " + put_color(str(result[0]["result"]["mem"]), "blue") + "%"
 
             if result[1]["code"]:
-                print pt.put_color(u"  [X]镜像", "red")
-                print "    [-]error: "+result[0]["msg"]
+                print pt.put_color(u"  [X]拥有镜像", "red")
+                print "    [-]error: "+result[1]["msg"]
             else:
-                print u"  [-]拥有镜像(%s)" % pt.put_color(str(len(result[0]["result"])), "cyan")
-                for image in result[0]["result"]:
+                print u"  [-]拥有镜像(%s)" % pt.put_color(str(len(result[1]["result"])), "cyan")
+                for image in result[1]["result"]:
                     print "    [-]"+image
 
             if result[2]["code"]:
-                print pt.put_color(u"\n  [X]容器", "red")
-                print "    [-]error: "+result[1]["msg"]
+                print pt.put_color(u"\n  [X]拥有容器", "red")
+                print "    [-]error: "+result[2]["msg"]
             else:
                 print u"\n  [-]拥有容器(%s)" % pt.put_color(
-                    str(len(result[1]["result"])), "cyan")
-                for container in result[1]["result"]:
+                    str(len(result[2]["result"])), "cyan")
+                for container in result[2]["result"]:
                     print "    [-]short id: "+pt.put_color(container["id"][:6], "white")
                     print u"      [-]启动时间点: "+pt.put_color(container["start time"], "blue")
                     print u"      [-]状态: "+pt.put_color(container["status"],
