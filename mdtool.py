@@ -411,8 +411,8 @@ def basic_menu():
                 print "    [-]error: "+result[0]["msg"]
             else:
                 print u"  [-]负载情况"
-                print "    [-]cpu: " + put_color(str(result[0]["result"]["cpu"]), "blue") + "%"
-                print "    [-]mem: " + put_color(str(result[0]["result"]["mem"]), "blue") + "%"
+                print "    [-]cpu: " + pt.put_color(str(result[0]["result"]["cpu"]), "blue") + "%"
+                print "    [-]mem: " + pt.put_color(str(result[0]["result"]["mem"]), "blue") + "%"
 
             if result[1]["code"]:
                 print pt.put_color(u"  [X]拥有镜像", "red")
