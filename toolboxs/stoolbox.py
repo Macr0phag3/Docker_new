@@ -44,8 +44,8 @@ def cmd2slave(commands):
     if commands["command"] == "ip_used_ls":
         return ip_used_ls(*commands["arg"])
 
-    elif commands["command"] == "load_ls":
-        return load_ls()
+    elif commands["command"] == "loads_ls":
+        return loads_ls()
 
     elif commands["command"] == "check_alive":
         return check_alive()
@@ -323,7 +323,7 @@ def images_ls():  # ok
     return json.dumps(dicts)
 
 
-def load_ls():  # ok
+def loads_ls():  # ok
     """
     查询负载情况
 

@@ -184,7 +184,7 @@ def check_load():
     mission = {
         "mission": "cmd2slave",
         "commands": {
-            "command": "load_ls",
+            "command": "loads_ls",
             "arg": []
         }
     }

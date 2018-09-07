@@ -359,6 +359,14 @@ def basic_menu():
         slaves_info = {}
         mission = [
             {
+                "mission": "cmd2slave",
+                "commands":
+                {
+                    "command": "loads_ls",
+                    "arg": [],
+                }
+            },
+            {
                 "mission": "cmd2docker",
                 "commands":
                 {
@@ -378,6 +386,11 @@ def basic_menu():
 
         for ip in ips:
             slaves_info[ip] = {
+                "load": {
+                    "code": 1,
+                    "msg": "",
+                    "loads": []
+                },
                 "image": {
                     "code": 1,
                     "msg": "",
@@ -393,19 +406,27 @@ def basic_menu():
             result = json.loads(mt.command2slave(ip, json.dumps(mission)))
             print u"[+]虚拟机: "+pt.put_color(ip, "white")
 
-            if result[0]["code"]:
+            if result[1]["code"]:
                 print pt.put_color(u"  [X]镜像", "red")
                 print "    [-]error: "+result[0]["msg"]
             else:
-                print u"  [-]镜像(%s)" % pt.put_color(str(len(result[0]["result"])), "cyan")
+                print u"  [-]拥有镜像(%s)" % pt.put_color(str(len(result[0]["result"])), "cyan")
                 for image in result[0]["result"]:
                     print "    [-]"+image
 
             if result[1]["code"]:
+                print pt.put_color(u"  [X]镜像", "red")
+                print "    [-]error: "+result[0]["msg"]
+            else:
+                print u"  [-]拥有镜像(%s)" % pt.put_color(str(len(result[0]["result"])), "cyan")
+                for image in result[0]["result"]:
+                    print "    [-]"+image
+
+            if result[2]["code"]:
                 print pt.put_color(u"\n  [X]容器", "red")
                 print "    [-]error: "+result[1]["msg"]
             else:
-                print u"\n  [-]容器(%s)" % pt.put_color(
+                print u"\n  [-]拥有容器(%s)" % pt.put_color(
                     str(len(result[1]["result"])), "cyan")
                 for container in result[1]["result"]:
                     print "    [-]short id: "+pt.put_color(container["id"][:6], "white")
