@@ -431,7 +431,7 @@ def basic_menu():
 
 
 def pro_menu():
-    print u"施工中..."
+    print u"\033[40;1;33;40m施工中...\033[0m"
 
 
 def intro_menu():
