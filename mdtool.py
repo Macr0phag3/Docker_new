@@ -411,8 +411,8 @@ def basic_menu():
                 print "    [-]error: "+result[0]["msg"]
             else:
                 print u"  [-]负载情况"
-                print "    [-]cpu: " + pt.put_color(str(result[0]["result"]["cpu"] + "%"), "white")
-                print "    [-]mem: " + pt.put_color(str(result[0]["result"]["mem"] + "%"), "white")
+                print "    [-]cpu: " + pt.put_color(str(result[0]["result"]["cpu"]) + "%"), "white")
+                print "    [-]mem: " + pt.put_color(str(result[0]["result"]["mem"]) + "%", "white")
 
             if result[1]["code"]:
                 print pt.put_color(u"  [X]拥有镜像", "red")
@@ -466,8 +466,8 @@ def intro_menu():
 signal.signal(signal.SIGINT, exit)
 signal.signal(signal.SIGTERM, exit)
 
-ips = mt.setting["slave_ip"]
-subnet = mt.setting["bridge"]["subnet"]
+ips=mt.setting["slave_ip"]
+subnet=mt.setting["bridge"]["subnet"]
 
 show_logo()
 Main_menu()
