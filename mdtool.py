@@ -207,8 +207,8 @@ def basic_menu():
                 empty_slave.append(i)
             else:
                 for j, r in enumerate(result["result"]):
-                    print "  %s: [%s] [%s] [%s]" % (pt.put_color(str(j), "cyan"), pt.put_color(r["status"], "white"),
-                                                    pt.put_color(r["ip"], "white"), pt.put_color(r["image name"], "white"))
+                    print "  %s: [%s] [%s] [%s]" % (pt.put_color(str(j), "cyan"), pt.put_color(
+                        r["status"], "green" if r["status"] == "running" else "yellow"), pt.put_color(r["ip"], "white"), pt.put_color(r["image name"], "white"))
             print
         print "{}: 返回\n{}: 退出".format(*colored_choice(0))
         print "-"*50
@@ -411,14 +411,14 @@ def basic_menu():
                 print "    [-]error: "+result[0]["msg"]
             else:
                 print u"  [-]负载情况"
-                print "    [-]cpu: " + pt.put_color(str(result[0]["result"]["cpu"]), "blue") + "%"
-                print "    [-]mem: " + pt.put_color(str(result[0]["result"]["mem"]), "blue") + "%"
+                print "    [-]cpu: " + pt.put_color(str(result[0]["result"]["cpu"]), "white") + "%"
+                print "    [-]mem: " + pt.put_color(str(result[0]["result"]["mem"]), "white") + "%"
 
             if result[1]["code"]:
                 print pt.put_color(u"  [X]拥有镜像", "red")
                 print "    [-]error: "+result[1]["msg"]
             else:
-                print u"  [-]拥有镜像(%s)" % pt.put_color(str(len(result[1]["result"])), "cyan")
+                print u"\n  [-]拥有镜像(%s)" % pt.put_color(str(len(result[1]["result"])), "cyan")
                 for image in result[1]["result"]:
                     print "    [-]"+image
 
