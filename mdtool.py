@@ -178,7 +178,7 @@ def basic_menu():
 
         label .slave_list
         print u"选择虚拟机"
-        print "="*50
+        print "-"*50
         alive_slave = []
         empty_slave = []
 
@@ -210,7 +210,7 @@ def basic_menu():
                                                     pt.put_color(r["ip"], "white"), pt.put_color(r["image name"], "white"))
 
         print "\n{}: 返回\n{}: 退出".format(*colored_choice(0))
-        print "="*50
+        print "-"*50
 
         choice_slave = raw_input("> ")
         if choice_slave == 'b':
@@ -330,13 +330,13 @@ def basic_menu():
 
         print "-"*50
         for container in results:
-            print "    [-]short id: "+pt.put_color(container["id"][:6], "white")
-            print "      [-]ip: "+pt.put_color(container["ip"], "white")
-            print "      [-]id: "+container["id"]
-            print u"      [-]启动时间点: "+container["start time"]
-            print u"      [-]状态: "+pt.put_color(container["status"],
-                                                "green" if container["status"] == "running" else "yellow")
-            print u"      [-]镜像名: "+pt.put_color(container["image name"], "white")
+            print "[-]short id: "+pt.put_color(container["id"][:6], "white")
+            print "  [-]ip: "+pt.put_color(container["ip"], "white")
+            print "  [-]id: "+container["id"]
+            print u"  [-]启动时间点: "+container["start time"]
+            print u"  [-]状态: "+pt.put_color(container["status"],
+                                            "green" if container["status"] == "running" else "yellow")
+            print u"  [-]镜像名: "+pt.put_color(container["image name"], "white")
         print "-"*50
 
     elif choice == '4':
