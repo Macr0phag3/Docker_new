@@ -410,7 +410,7 @@ def basic_menu():
                                                         "green" if container["status"] == "running" else "yellow")
                     print u"      [-]容器 ip: "+pt.put_color(container["ip"], "white")
                     print "      [-]id: "+container["id"]
-                    print u"      [-]镜像名: "+pt.put_color(container["image name"], "white")
+                    print u"      [-]镜像名: "+pt.put_color(container["image name"], "white"), "\n"
             print "-"*50, '\n'
 
     elif choice == 'b':
