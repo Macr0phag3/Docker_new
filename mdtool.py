@@ -201,7 +201,7 @@ def basic_menu():
                 print "  [X]error:", result["msg"]
 
             alive_slave.append(i)
-            print "%s: %s" % (pt.put_color(str(i), "cyan"), pt.put_color(ip, "green"))
+            print "%s: %s" % (pt.put_color(str(i), "cyan"), pt.put_color(ip, "white"))
             if result["result"] == []:
                 print pt.put_color("  [!]Empty", "yellow")
                 empty_slave.append(i)
@@ -411,8 +411,8 @@ def basic_menu():
                 print "    [-]error: "+result[0]["msg"]
             else:
                 print u"  [-]负载情况"
-                print "    [-]cpu: " + pt.put_color(str(result[0]["result"]["cpu"]), "white") + "%"
-                print "    [-]mem: " + pt.put_color(str(result[0]["result"]["mem"]), "white") + "%"
+                print "    [-]cpu: " + pt.put_color(str(result[0]["result"]["cpu"] + "%"), "white")
+                print "    [-]mem: " + pt.put_color(str(result[0]["result"]["mem"] + "%"), "white")
 
             if result[1]["code"]:
                 print pt.put_color(u"  [X]拥有镜像", "red")
