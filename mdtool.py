@@ -20,7 +20,7 @@ def exit(a=None, b=None):  # ok
 
 
 def colored_choice(num):
-    num_color = [pt.put_color(str(i), "blue") for i in range(num)]
+    num_color = [pt.put_color(str(i), "cyan") for i in range(num)]
     alpha_color = [pt.put_color(i, "yellow") for i in ['b', 'q']]
     return num_color + alpha_color
 
@@ -131,7 +131,7 @@ def basic_menu():
         label .image_list
         print "=" * 50
         for i, image in enumerate(image_list["result"]):
-            print "%s: %s" % (pt.put_color(str(i), "blue"), image)
+            print "%s: %s" % (pt.put_color(str(i), "cyan"), image)
         print "=" * 50
 
         choice_image = raw_input("> ")
@@ -197,13 +197,13 @@ def basic_menu():
                 print "  [X]error:", result["msg"]
 
             alive_slave.append(i)
-            print "%s: %s" % (pt.put_color(str(i), "blue"), pt.put_color(ip, "green"))
+            print "%s: %s" % (pt.put_color(str(i), "cyan"), pt.put_color(ip, "green"))
             if result["result"] == []:
                 print pt.put_color("  [!]Empty", "yellow")
                 empty_slave.append(i)
             else:
                 for j, r in enumerate(result["result"]):
-                    print "  %s: [%s] [%s] [%s]" % (pt.put_color(str(j), "blue"), pt.put_color(r["status"], "white"),
+                    print "  %s: [%s] [%s] [%s]" % (pt.put_color(str(j), "cyan"), pt.put_color(r["status"], "white"),
                                                     pt.put_color(r["ip"], "white"), pt.put_color(r["image name"], "white"))
 
         print "\n{}: 返回\n{}: 退出".format(*colored_choice(0))
@@ -297,7 +297,7 @@ def basic_menu():
 
         images = image_list["result"]
         for i, image in enumerate(images):
-            print "%s: %s" % (pt.put_color(str(i), "blue"), image)
+            print "%s: %s" % (pt.put_color(str(i), "cyan"), image)
 
     elif choice == "3":
         mission = {
@@ -318,12 +318,12 @@ def basic_menu():
             results.extend(result["result"])
 
         for i, container in enumerate(results):
-            print "%s. %s" % (pt.put_color(str(i), "blue"),
+            print "%s. %s" % (pt.put_color(str(i), "cyan"),
                               pt.put_color(container["id"][:6], "white"))
             print "  [-]id: "+container["id"]
             print u"  [-]状态: "+pt.put_color(container["status"],
                                             "green" if container["status"] == "running" else "yellow")
-            print u"  [-]启动时间点: "+container["start time"]
+            print u"  [-]启动时间点: "+pt.put_color(container["start time"], "blue")
             print u"  [-]容器 ip: "+pt.put_color(container["ip"], "white")
             print u"  [-]所在虚拟机 ip: "+pt.put_color(container["slave ip"], "white")
             print u"  [-]镜像名: "+pt.put_color(container["image name"], "white")
@@ -393,7 +393,7 @@ def basic_menu():
                 print pt.put_color(u"  [X]镜像", "red")
                 print "    [-]error: "+result[0]["msg"]
             else:
-                print u"  [-]镜像(%s)" % pt.put_color(str(len(result[0]["result"])), "blue")
+                print u"  [-]镜像(%s)" % pt.put_color(str(len(result[0]["result"])), "cyan")
                 for image in result[0]["result"]:
                     print "    [-]"+image
 
@@ -402,10 +402,10 @@ def basic_menu():
                 print "    [-]error: "+result[1]["msg"]
             else:
                 print u"\n  [-]容器(%s)" % pt.put_color(
-                    str(len(result[1]["result"])), "blue")
+                    str(len(result[1]["result"])), "cyan")
                 for container in result[1]["result"]:
                     print "    [-]short id: "+pt.put_color(container["id"][:6], "white")
-                    print u"      [-]启动时间点: "+container["start time"]
+                    print u"      [-]启动时间点: "+pt.put_color(container["start time"], "blue")
                     print u"      [-]状态: "+pt.put_color(container["status"],
                                                         "green" if container["status"] == "running" else "yellow")
                     print u"      [-]容器 ip: "+pt.put_color(container["ip"], "white")
@@ -433,7 +433,7 @@ def intro_menu():
     print """\033[40;1;36;40m1\033[0m. 输入行首的数字以选择对应的选项。
 \033[40;1;36;40m2\033[0m. 输入 \033[40;1;33;40mb\033[0m 总是返回上一级。
 \033[40;1;36;40m3\033[0m. 输入 \033[40;1;33;40mq\033[0m 总是直接退出程序。
-\033[40;1;36;40m4\033[0m. 输入为 \033[40;1;37;40m空\033[0m（即直接回车），则为放弃当前操作。
+\033[40;1;36;40m4\033[0m. 在更多操作中，在输入信息（如 ip 等）时，输入为 \033[40;1;37;40m空\033[0m（即直接回车），则为放弃当前操作。
 \033[40;1;36;40m5\033[0m. \033[40;1;37;40m基本操作\033[0m 菜单中，涵盖绝大多数使用场景，无特殊情况只需要使用这些功能即可。
 \033[40;1;36;40m6\033[0m. \033[40;1;37;40m更多操作\033[0m 菜单中，有很多底层的细节操作，有特殊需求可以使用这些功能。"""
 
