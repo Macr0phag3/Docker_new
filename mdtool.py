@@ -70,9 +70,6 @@ def Main_menu():  # ok
     elif choice == 'q':
         exit()
 
-    elif not choice:
-        print pt.put_color(u"[!]操作已取消", "yellow")
-
     else:
         print pt.put_color("输入有误, 重新输入", "red")
 
@@ -220,10 +217,6 @@ def basic_menu():
         elif choice_slave == 'q':
             exit()
 
-        elif not choice_slave:
-            print pt.put_color(u"[!]操作已取消", "yellow")
-            goto .slave_list
-
         elif not choice_slave.isdigit():
             show_logo()
             print pt.put_color(u"输入有误, 重新输入", "red")
@@ -250,10 +243,6 @@ def basic_menu():
 
         elif choice_container == 'q':
             exit()
-
-        elif not choice_container:
-            print pt.put_color(u"[!]操作已取消", "yellow")
-            goto .slave_list
 
         elif not choice_container.isdigit():
             show_logo()
@@ -429,9 +418,6 @@ def basic_menu():
 
     elif choice == 'q':
         exit()
-
-    elif not choice:
-        print pt.put_color(u"[!]操作已取消", "yellow")
 
     else:
         print pt.put_color(u"输入有误, 重新输入", "red")
