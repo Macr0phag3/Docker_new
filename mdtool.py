@@ -466,6 +466,9 @@ def nk_menu():
     if choice == '0':
         nk_menu()
 
+    elif choice == 'b':
+        return
+
     elif choice == 'q':
         exit()
 
@@ -502,6 +505,9 @@ def pro_menu():
 
     elif choice == '2':
         intro_menu()
+
+    elif choice == 'b':
+        return
 
     elif choice == 'q':
         exit()
