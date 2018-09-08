@@ -520,7 +520,7 @@ def pro_menu():
     else:
         print pt.put_color("输入有误, 重新输入", "red")
 
-    goto .main
+    goto .pro_menu
 
 
 def intro_menu():
