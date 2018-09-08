@@ -451,6 +451,19 @@ def basic_menu():
 
 
 @with_goto
+def nk_menu():
+    label .nk_menu
+    choice = raw_input("""
+==================
+{}: 显示可用 ip
+{}: 显示已用 ip
+{}: 返回
+{}: 退出
+==================
+> """.format(*colored_choice(8)))
+
+
+@with_goto
 def pro_menu():
     label .pro_menu
     print u"\033[40;1;33;40m施工中...\033[0m"
@@ -469,6 +482,24 @@ def pro_menu():
 {}: 退出
 ==================
 > """.format(*colored_choice(8)))
+
+    show_logo()
+    if choice == '0':
+        nk_menu()
+
+    elif choice == '1':
+        pro_menu()
+
+    elif choice == '2':
+        intro_menu()
+
+    elif choice == 'q':
+        exit()
+
+    else:
+        print pt.put_color("输入有误, 重新输入", "red")
+
+    goto .main
 
 
 def intro_menu():
