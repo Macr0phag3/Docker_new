@@ -462,6 +462,16 @@ def nk_menu():
 ==================
 > """.format(*colored_choice(8)))
 
+    show_logo()
+    if choice == '0':
+        nk_menu()
+
+    elif choice == 'q':
+        exit()
+
+    else:
+        print pt.put_color("输入有误, 重新输入", "red")
+
 
 @with_goto
 def pro_menu():
