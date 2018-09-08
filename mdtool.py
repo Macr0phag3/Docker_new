@@ -466,6 +466,9 @@ def nk_menu():
     if choice == '0':
         nk_menu()
 
+    elif choice == '1':
+        pass
+
     elif choice == 'b':
         return
 

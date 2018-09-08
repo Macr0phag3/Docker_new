@@ -70,38 +70,6 @@ def notrun(command):  # ok
         pprint(mt.command2slave(ip, json.dumps(mission)))
 
 
-@with_goto
-def dk_menu():  # ok
-    label .docker
-    choice = raw_input("""
-===========
-{}: 分配容器
-{}: 回收容器
-{}: 查看信息
-{}: 列出镜像
-{}: 更多操作
-{}: 返回
-{}: 退出
-===========
-> """.format(*colored_choice(5)))
-
-    show_logo()
-
-    elif choice == "5":
-        dk_more_menu()
-
-    elif choice == 'b':
-        return
-
-    elif choice == 'q':
-        abort(1, 1)
-
-    else:
-        print pt.put_color(u"输入有误, 重新输入", "red")
-
-    goto .docker
-
-
 def command2all_slaves(ips, command):
     result = []
     for ip in ips:
