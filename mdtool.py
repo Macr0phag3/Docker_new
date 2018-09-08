@@ -450,8 +450,26 @@ def basic_menu():
     goto .basic_menu
 
 
+@with_goto
 def pro_menu():
+    label .pro_menu
     print u"\033[40;1;33;40m施工中...\033[0m"
+    return
+
+    choice = raw_input("""
+==================
+{}: 显示可用 ip
+{}: 显示已用 ip
+{}: 运行
+{}: 暂停
+{}: 恢复
+{}: 停止
+{}: 删除
+{}: 列出
+{}: 返回
+{}: 退出
+==================
+> """.format(*colored_choice(8)))
 
 
 def intro_menu():
