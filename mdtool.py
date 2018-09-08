@@ -464,10 +464,12 @@ def nk_menu():
 
     show_logo()
     if choice == '0':
-        nk_menu()
+        result = json.loads(mt.ip_ls(subnet))
+        pprint(result)
 
     elif choice == '1':
-        pass
+        result = json.loads(mt.ip_used(subnet))
+        pprint(result)
 
     elif choice == 'b':
         return
@@ -504,7 +506,7 @@ def pro_menu():
         nk_menu()
 
     elif choice == '1':
-        pro_menu()
+        run_menu()
 
     elif choice == '2':
         intro_menu()
