@@ -505,12 +505,6 @@ def pro_menu():
     if choice == '0':
         nk_menu()
 
-    elif choice == '1':
-        run_menu()
-
-    elif choice == '2':
-        intro_menu()
-
     elif choice == 'b':
         return
 
