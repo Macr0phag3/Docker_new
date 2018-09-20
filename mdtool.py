@@ -489,8 +489,8 @@ def pro_menu():
 ==================
 {}: 网络相关
 {}: 批量运行
-{}: 批量停止
-{}: 批量删除
+{}: 全部停止
+{}: 全部删除
 {}: 返回
 {}: 退出
 ==================
@@ -596,6 +596,52 @@ def pro_menu():
         print pt.put_color("输入有误, 重新输入", "red")
 
     goto .pro_menu
+
+    elif choice == '2':
+        for i, ip in enumerate(ips):
+            result = json.loads(
+                mt.command2slave(
+                    ip, json.dumps({
+                        "mission": "cmd2docker",
+                        "commands": {
+                            "command": "containers_ls",
+                            "arg": []
+                        }})))
+
+            if result["code"]:
+                print u"[+]虚拟机: %s" % pt.put_color(ip, "red")
+                print "  [X]error:", result["msg"]
+                continue
+
+            print u"[+]虚拟机: %s" % pt.put_color(ip, "green")
+            if result["result"] == []:
+                print pt.put_color("  [!]Empty", "yellow")
+            else:
+                for j, r in enumerate(result["result"]):
+                    id_or_name = r["id"]
+                    print u"  [-]回收容器:", id_or_name
+                    mission["commands"]["arg"] = [id_or_name, "kill"]
+                    print u"    [-]停止容器 ...",
+                    result = json.loads(mt.command2slave(ip, json.dumps(mission)))
+
+                    if result["code"]:
+                        print pt.put_color(u"失败", "red")
+                        print u"    [x]" + result["msg"]
+                        continue
+
+                    print pt.put_color(u"成功", "green")
+                    print u"    [-]删除容器 ...",
+                    mission["commands"]["arg"] = [id_or_name, "rm"]
+                    result = json.loads(mt.command2slave(
+                        ip, json.dumps(mission)))
+
+                    if result["code"]:
+                        print pt.put_color(u"失败", "red")
+                        print u"    [x]" + result["msg"]
+                        continue
+
+                    print pt.put_color(u"成功", "green")
+        print u"[!]完成"
 
 
 def intro_menu():
