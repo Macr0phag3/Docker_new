@@ -587,6 +587,12 @@ def pro_menu():
             print u"  [-]ID 为", pt.put_color(result["result"]["id"], "white")
 
     elif choice == '2':
+        mission = {
+            "mission": "cmd2docker",
+            "commands": {
+                "command": "others_cmd",
+                "arg": []
+            }}
         for i, ip in enumerate(ips):
             result = json.loads(
                 mt.command2slave(
