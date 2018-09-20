@@ -490,20 +490,103 @@ def pro_menu():
     choice = raw_input("""
 ==================
 {}: 网络相关
-{}: 运行
-{}: 暂停
-{}: 恢复
-{}: 停止
-{}: 删除
-{}: 列出
+{}: 批量运行
+{}: 批量停止
+{}: 批量删除
 {}: 返回
 {}: 退出
 ==================
-> """.format(*colored_choice(8)))
+> """.format(*colored_choice(4)))
 
     show_logo()
     if choice == '0':
         nk_menu()
+
+    elif choice == '1':
+        choice = raw_input("""
+==================
+输入容器数量
+==================
+> """)
+        if not choice.isdigit():
+            show_logo()
+            goto .pro_menu
+
+        container_num = int(choice)
+        image_list = json.loads(mt.command2slave(mt.setting["bridge"]["self_ip"], json.dumps({
+            "mission": "cmd2docker",
+            "commands": {
+                "command": "images_ls",
+                "arg": []
+            }})))
+
+        if image_list["code"]:
+            print pt.put_color(u"[X]获取虚拟机: %s 的所有镜像失败" % ip, "red")
+            print "  [-]", image_list["msg"]
+
+        print u"选择镜像"
+        label .image_list
+        print "-" * 50
+        for i, image in enumerate(image_list["result"]):
+            print "%s: %s" % (pt.put_color(str(i), "cyan"), image)
+        print "{}: 返回\n{}: 退出".format(*colored_choice(0))
+        print "-" * 50
+
+        choice_image = raw_input("> ")
+
+        if choice_image == "b":
+            show_logo()
+            goto .pro_menu
+
+        elif choice_image == "q":
+            exit()
+
+        elif choice_image not in [str(c) for c in range(i+1)]:
+            show_logo()
+            print pt.put_color(u"[X]输入有误, 重新输入", "red")
+            goto .image_list
+
+        for _ in range(container_num):
+            result = json.loads(mt.ip_assign(subnet))
+            if result["code"]:
+                print pt.put_color(u"[X]分配 ip 失败", "red")
+                print "  [-]", result["msg"]
+                continue
+
+            container_ip = result["result"]
+            result = json.loads(mt.check_load())
+            if result["code"]:
+                print pt.put_color(u"[X]负载查询失败", "red")
+                print "  [-]", result["msg"]
+                continue
+
+            min_load = 100
+            for i in result["result"]:
+                for j in i:
+                    value = i[j]["cpu"]*0.2 + i[j]["mem"]*0.8
+                    if value < min_load:
+                        min_load = value
+                        ip = j
+
+            image_name = image_list["result"][int(choice_image)]
+            result = json.loads(
+                mt.command2slave(
+                    ip, json.dumps({
+                        "mission": "cmd2docker",
+                        "commands": {
+                            "command": "run",
+                            "arg": [image_name, container_ip]
+                        }})))
+
+            if result["code"]:
+                print pt.put_color(u"[X]启动容器失败", "red")
+                print u"  [-]", result["msg"]
+                continue
+
+            print pt.put_color(u"[+]启动镜像 %s 的容器成功" % image_name, "green")
+            print u"  [-]容器位于虚拟机 %s 中" % pt.put_color(ip, "white")
+            print u"  [-]给容器分配的 ip 为:", pt.put_color(result["result"]["ip"], "white")
+            print u"  [-]ID 为", pt.put_color(result["result"]["id"], "white")
 
     elif choice == 'b':
         return
