@@ -586,17 +586,6 @@ def pro_menu():
             print u"  [-]给容器分配的 ip 为:", pt.put_color(result["result"]["ip"], "white")
             print u"  [-]ID 为", pt.put_color(result["result"]["id"], "white")
 
-    elif choice == 'b':
-        return
-
-    elif choice == 'q':
-        exit()
-
-    else:
-        print pt.put_color("输入有误, 重新输入", "red")
-
-    goto .pro_menu
-
     elif choice == '2':
         for i, ip in enumerate(ips):
             result = json.loads(
@@ -642,6 +631,17 @@ def pro_menu():
 
                     print pt.put_color(u"成功", "green")
         print u"[!]完成"
+
+    elif choice == 'b':
+        return
+
+    elif choice == 'q':
+        exit()
+
+    else:
+        print pt.put_color("输入有误, 重新输入", "red")
+
+    goto .pro_menu
 
 
 def intro_menu():
