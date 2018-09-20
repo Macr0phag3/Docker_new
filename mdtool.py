@@ -484,8 +484,6 @@ def nk_menu():
 @with_goto
 def pro_menu():
     label .pro_menu
-    print u"\033[40;1;33;40m施工中...\033[0m"
-    return
 
     choice = raw_input("""
 ==================
