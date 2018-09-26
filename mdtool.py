@@ -500,13 +500,16 @@ def nk_menu():
             else:
                 IPs[container["image name"]] = {"ips": []}
 
-        for i in IPs:
-            print i
+        for image in IPs:
+            print "[+]镜像名: %s" % pt.put_color(image, "white")
+            for ip in image["ips"]:
+                print ip
+            print "-"*10, pt.put_color(str(len(image["ips"])), "cyan"), "-"*10
 
         # print "%s. %s" % (pt.put_color(str(i), "cyan"),
         #                  pt.put_color(container["id"][:6], "white"))
-        #print u"  [-]容器 ip: "+pt.put_color(container["ip"], "white")
-        #print u"  [-]镜像名: "+pt.put_color(container["image name"], "white")
+        # print u"  [-]容器 ip: "+pt.put_color(container["ip"], "white")
+        # print u"  [-]镜像名: "+pt.put_color(container["image name"], "white")
 
     elif choice == 'b':
         return
