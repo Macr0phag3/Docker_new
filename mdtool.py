@@ -495,10 +495,9 @@ def nk_menu():
             results.extend(result["result"])
 
         for i, container in enumerate(results):
-            if IPs.has_key(container["image name"]):
-                IPs[container["image name"]]["ips"].append(container["ip"])
-            else:
+            if not IPs.has_key(container["image name"]):
                 IPs[container["image name"]] = {"ips": []}
+            IPs[container["image name"]]["ips"].append(container["ip"])
 
         for image in IPs:
             print u"[+]镜像名: %s" % pt.put_color(image, "white")
