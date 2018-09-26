@@ -502,7 +502,7 @@ def nk_menu():
 
         for image in IPs:
             print u"[+]镜像名: %s" % pt.put_color(image, "white")
-            for ip in image["ips"]:
+            for ip in IPs[image]["ips"]:
                 print ip
             print "-"*10, pt.put_color(str(len(image["ips"])), "cyan"), "-"*10
 
