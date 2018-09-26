@@ -498,7 +498,7 @@ def nk_menu():
             if IPs.has_key(container["image name"]):
                 IPs[container["image name"]]["ips"].append(container["ip"])
             else:
-                IPsIPs[container["image name"]] = {"ips": []}
+                IPs[container["image name"]] = {"ips": []}
 
         for i in IPs:
             print i
