@@ -115,6 +115,7 @@ def ip_used_ls(subnet):
     if len(result) == 1:
         ID = result[0]
         net = client.inspect_network(ID)
+        # pprint()
         containers = net["Containers"]
         dicts["result"] = [containers[i]["IPv4Address"].split("/")[0] for i in containers]
         dicts["code"] = 0

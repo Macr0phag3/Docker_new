@@ -457,10 +457,10 @@ def nk_menu():
 ==================
 {}: 显示可用 ip
 {}: 显示已用 ip
-{}: 返回
+{}: 按镜像显示已用 ip
 {}: 退出
 ==================
-> """.format(*colored_choice(8)))
+> """.format(*colored_choice(3)))
 
     show_logo()
     if choice == '0':
@@ -469,7 +469,44 @@ def nk_menu():
 
     elif choice == '1':
         result = json.loads(mt.ip_used(subnet))
-        pprint(result)
+        for i in result:
+            print i
+        # pprint(result)
+    elif choice == "2":
+        mission = {
+            "mission": "cmd2docker",
+            "commands": {
+                "command": "containers_ls",
+                "arg": []
+            }
+        }
+
+        IPs = {
+
+        }
+
+        results = []
+        for i, ip in enumerate(ips):
+            result = json.loads(mt.command2slave(ip, json.dumps(mission)))
+            if result["code"]:
+                print u"[X]获取虚拟机 %s 的所有容器失败" % ip
+                continue
+
+            results.extend(result["result"])
+
+        for i, container in enumerate(results):
+            if IPs.has_key(container["image name"]):
+                IPs[container["image name"]]["ips"].append(container["ip"])
+            else:
+                IPsIPs[container["image name"]] = {"ips": []}
+
+        for i in IPs:
+            print i
+
+        # print "%s. %s" % (pt.put_color(str(i), "cyan"),
+        #                  pt.put_color(container["id"][:6], "white"))
+        #print u"  [-]容器 ip: "+pt.put_color(container["ip"], "white")
+        #print u"  [-]镜像名: "+pt.put_color(container["image name"], "white")
 
     elif choice == 'b':
         return
