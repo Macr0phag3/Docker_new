@@ -654,8 +654,8 @@ def pro_menu():
                 "id": container["id"],
             })
 
-        for image in containers:
-            print u"[+]镜像名: %s" % pt.put_color(image, "white")
+        for i, image in enumerate(containers):
+            print u"[%d]镜像名: %s" % (i, pt.put_color(image, "white"))
             for ip in containers[image]["containers"]:
                 print ip
             print "-" * 10, pt.put_color(str(len(containers[image]["containers"])), "cyan"), "-"*10
