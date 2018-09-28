@@ -658,7 +658,8 @@ def pro_menu():
             print u"[+]镜像名: %s" % pt.put_color(image, "white")
             for ip in containers[image]["containers"]:
                 print ip
-            print "-"*10, pt.put_color(str(len(containers[image]["ids"])), "cyan"), "-"*10, "\n"
+            print "-" * 10, pt.put_color(str(len(containers[image]["containers"])), "cyan"), "-"*10
+            print "\n"
 
         '''
         mission = {
