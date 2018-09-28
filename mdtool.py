@@ -681,6 +681,7 @@ def pro_menu():
                 "arg": []
             }}
 
+        print "\n[+]"+choice
         for i, container in enumerate(containers[choice]):
             for j, r in enumerate(containers[choice][container]):
                 id_or_name = r["id"]
