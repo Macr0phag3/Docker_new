@@ -635,7 +635,7 @@ def pro_menu():
         }
 
         containers = {}
-        image_order = {}
+        image_order = []
         results = []
         for i, ip in enumerate(ips):
             result = json.loads(mt.command2slave(ip, json.dumps(mission)))
@@ -650,7 +650,8 @@ def pro_menu():
                 containers[container["image name"]] = {
                     "containers": []
                 }
-                image_order[i] = container["image name"]
+                image_order.append(container["image name"])
+
             containers[container["image name"]]["containers"].append({
                 "slave ip": container["slave ip"],
                 "id": container["id"],
@@ -669,6 +670,7 @@ def pro_menu():
             return
 
         choice = int(choice)
+        print image_order[choice]
         print image_order
         '''
         mission = {
