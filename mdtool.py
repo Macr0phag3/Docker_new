@@ -635,6 +635,7 @@ def pro_menu():
         }
 
         containers = {}
+        image_order = {}
         results = []
         for i, ip in enumerate(ips):
             result = json.loads(mt.command2slave(ip, json.dumps(mission)))
@@ -649,6 +650,7 @@ def pro_menu():
                 containers[container["image name"]] = {
                     "containers": []
                 }
+                image_order[i] = container["image name"]
             containers[container["image name"]]["containers"].append({
                 "slave ip": container["slave ip"],
                 "id": container["id"],
@@ -667,16 +669,17 @@ def pro_menu():
             return
 
         choice = int(choice)
+        print image_order
+        '''
         mission = {
             "mission": "cmd2docker",
             "commands": {
                 "command": "others_cmd",
                 "arg": []
             }}
+        print containers
         for i, container in enumerate(containers[choice]):
-            print i, container
-            '''
-            for j, r in enumerate(result["result"]):
+            for j, r in enumerate(container["containers"]):
                 id_or_name = r["id"]
                 print u"  [-]回收容器:", id_or_name
                 mission["commands"]["arg"] = [id_or_name, "kill"]
@@ -700,9 +703,9 @@ def pro_menu():
                     continue
 
                 print pt.put_color(u"成功", "green")
-                '''
-        print u"[!]完成"
 
+        print u"[!]完成"
+        '''
     elif choice == '3':
         if raw_input(pt.put_color(u"确定删除所有容器？\nyes/[no]> ", "red")) != "yes":
             print u"已放弃操作"
