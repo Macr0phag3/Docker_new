@@ -650,7 +650,6 @@ def pro_menu():
                 containers[container["image name"]] = {
                     "containers": []
                 }
-                image_order.append(container["image name"])
 
             containers[container["image name"]]["containers"].append({
                 "slave ip": container["slave ip"],
@@ -659,6 +658,7 @@ def pro_menu():
 
         for i, image in enumerate(containers):
             print u"[%d]镜像名: %s" % (i, pt.put_color(image, "white"))
+            image_order.append(image)
             for ip in containers[image]["containers"]:
                 print ip
             print "-" * 10, pt.put_color(str(len(containers[image]["containers"])), "cyan"), "-"*10
@@ -672,7 +672,7 @@ def pro_menu():
         choice = int(choice)
         print image_order[choice]
         print image_order
-        '''
+
         mission = {
             "mission": "cmd2docker",
             "commands": {
@@ -680,13 +680,15 @@ def pro_menu():
                 "arg": []
             }}
         print containers
-        for i, container in enumerate(containers[choice]):
+        '''
+        for i, container in enumerate(containers[image_order[choice]]):
             for j, r in enumerate(container["containers"]):
                 id_or_name = r["id"]
+                ip = r["slave ip"]
                 print u"  [-]回收容器:", id_or_name
                 mission["commands"]["arg"] = [id_or_name, "kill"]
                 print u"    [-]停止容器 ...",
-                result = json.loads(mt.command2slave(ip, json.dumps(mission)))
+                result = json.loads(mt.command2slave(, json.dumps(mission)))
 
                 if result["code"]:
                     print pt.put_color(u"失败", "red")
