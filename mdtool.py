@@ -528,8 +528,8 @@ def pro_menu():
 ==================
 {}: 网络相关
 {}: 批量运行
+{}: 按镜像停止
 {}: 全部停止
-{}: 全部删除
 {}: 返回
 {}: 退出
 ==================
@@ -626,6 +626,87 @@ def pro_menu():
             print u"  [-]ID 为", pt.put_color(result["result"]["id"], "white")
 
     elif choice == '2':
+        mission = {
+            "mission": "cmd2docker",
+            "commands": {
+                "command": "containers_ls",
+                "arg": []
+            }
+        }
+
+        IPs = {}
+        results = []
+        for i, ip in enumerate(ips):
+            result = json.loads(mt.command2slave(ip, json.dumps(mission)))
+            if result["code"]:
+                print u"[X]获取虚拟机 %s 的所有容器失败" % ip
+                continue
+
+            results.extend(result["result"])
+
+        for i, container in enumerate(results):
+            if not IPs.has_key(container["image name"]):
+                IPs[container["image name"]] = {"ips": []}
+            IPs[container["image name"]]["ids"].append(container["id"])
+
+        for image in IPs:
+            print u"[+]镜像名: %s" % pt.put_color(image, "white")
+            for ip in IPs[image]["ips"]:
+                print ip
+            print "-"*10, pt.put_color(str(len(IPs[image]["ips"])), "cyan"), "-"*10, "\n"
+        '''
+        mission = {
+            "mission": "cmd2docker",
+            "commands": {
+                "command": "others_cmd",
+                "arg": []
+            }}
+        for i, ip in enumerate(ips):
+            result = json.loads(
+                mt.command2slave(
+                    ip, json.dumps({
+                        "mission": "cmd2docker",
+                        "commands": {
+                            "command": "containers_ls",
+                            "arg": []
+                        }})))
+
+            if result["code"]:
+                print u"[+]虚拟机: %s" % pt.put_color(ip, "red")
+                print "  [X]error:", result["msg"]
+                continue
+
+            print u"[+]虚拟机: %s" % pt.put_color(ip, "green")
+            if result["result"] == []:
+                print pt.put_color("  [!]Empty", "yellow")
+            else:
+                for j, r in enumerate(result["result"]):
+                    id_or_name = r["id"]
+                    print u"  [-]回收容器:", id_or_name
+                    mission["commands"]["arg"] = [id_or_name, "kill"]
+                    print u"    [-]停止容器 ...",
+                    result = json.loads(mt.command2slave(ip, json.dumps(mission)))
+
+                    if result["code"]:
+                        print pt.put_color(u"失败", "red")
+                        print u"    [x]" + result["msg"]
+                        continue
+
+                    print pt.put_color(u"成功", "green")
+                    print u"    [-]删除容器 ...",
+                    mission["commands"]["arg"] = [id_or_name, "rm"]
+                    result = json.loads(mt.command2slave(
+                        ip, json.dumps(mission)))
+
+                    if result["code"]:
+                        print pt.put_color(u"失败", "red")
+                        print u"    [x]" + result["msg"]
+                        continue
+
+                    print pt.put_color(u"成功", "green")
+        print u"[!]完成"
+        '''
+    elif choice == '3':
         mission = {
             "mission": "cmd2docker",
             "commands": {
