@@ -671,7 +671,7 @@ def pro_menu():
 
         choice = image_order[int(choice)]
         print choice
-        if raw_input(u"将清空镜像"+" %s "+u"的所有容器，确认？\nyes/[no]> " % choice) != "yes":
+        if raw_input(u"将清空镜像 "+choice+u" 的所有容器，确认？\nyes/[no]> ") != "yes":
             print u"已放弃操作"
             return
 
