@@ -676,7 +676,7 @@ def pro_menu():
         elif choice == 'q':
             exit()
 
-        if not choice.isdigit() and int(choice) not in range(len(image_order)):
+        if (not choice.isdigit()) or (int(choice) not in range(len(image_order))):
             print pt.put_color(u"输入有误, 重新输入", "red")
             return
 
@@ -705,7 +705,6 @@ def pro_menu():
                 if result["code"]:
                     print pt.put_color(u"失败", "red")
                     print u"    [x]" + result["msg"]
-                    continue
 
                 print pt.put_color(u"成功", "green")
                 print u"    [-]删除容器 ...",
@@ -762,7 +761,6 @@ def pro_menu():
                     if result["code"]:
                         print pt.put_color(u"失败", "red")
                         print u"    [x]" + result["msg"]
-                        continue
 
                     print pt.put_color(u"成功", "green")
                     print u"    [-]删除容器 ...",
