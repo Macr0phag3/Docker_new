@@ -664,13 +664,13 @@ def pro_menu():
             print "-" * 10, pt.put_color(str(len(containers[image]["containers"])), "cyan"), "-"*10
             print "\n"
 
-        choice = raw_input("选择要批量删除的镜像:\n> ")
+        choice = raw_input(u"选择要批量删除的镜像:\n> ")
         if not choice.isdigit() and int(choice) not in range(len(containers)):
-            print pt.put_color("输入有误, 重新输入", "red")
+            print pt.put_color(u"输入有误, 重新输入", "red")
             return
 
         choice = image_order[int(choice)]
-        if raw_input("将清空镜像 %s 的所有容器，确认？\nyes/[no]> " % choice) != "yes":
+        if raw_input(u"将清空镜像 %s 的所有容器，确认？\nyes/[no]> " % choice) != "yes":
             print u"已放弃操作"
             return
 
@@ -680,8 +680,7 @@ def pro_menu():
                 "command": "others_cmd",
                 "arg": []
             }}
-        print containers[choice]
-        '''
+
         for i, container in enumerate(containers[choice]):
             for j, r in enumerate(container["containers"]):
                 id_or_name = r["id"]
@@ -710,7 +709,7 @@ def pro_menu():
                 print pt.put_color(u"成功", "green")
 
         print u"[!]完成"
-        '''
+
     elif choice == '3':
         if raw_input(pt.put_color(u"确定删除所有容器？\nyes/[no]> ", "red")) != "yes":
             print u"已放弃操作"
