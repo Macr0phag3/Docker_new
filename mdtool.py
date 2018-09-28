@@ -669,9 +669,10 @@ def pro_menu():
             print pt.put_color("输入有误, 重新输入", "red")
             return
 
-        choice = int(choice)
-        print image_order[choice]
-        print image_order
+        choice = image_order[int(choice)]
+        if raw_input("将清空镜像 %s 的所有容器，确认？\nyes/[no]> " % choice) != "yes":
+            print u"已放弃操作"
+            return
 
         mission = {
             "mission": "cmd2docker",
@@ -679,9 +680,9 @@ def pro_menu():
                 "command": "others_cmd",
                 "arg": []
             }}
-        print containers
+        print containers[choice]
         '''
-        for i, container in enumerate(containers[image_order[choice]]):
+        for i, container in enumerate(containers[choice]):
             for j, r in enumerate(container["containers"]):
                 id_or_name = r["id"]
                 ip = r["slave ip"]
