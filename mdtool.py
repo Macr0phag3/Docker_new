@@ -671,7 +671,7 @@ def pro_menu():
 
         choice = image_order[int(choice)]
         print choice
-        if raw_input(u"将清空镜像 "+choice+u" 的所有容器，确认？\nyes/[no]> ") != "yes":
+        if raw_input("将清空镜像 "+choice.encode("utf8")+" 的所有容器，确认？\nyes/[no]> ") != "yes":
             print u"已放弃操作"
             return
 
@@ -683,7 +683,8 @@ def pro_menu():
             }}
 
         for i, container in enumerate(containers[choice]):
-            for j, r in enumerate(container["containers"]):
+            print container
+            for j, r in enumerate(containers[choice][container]):
                 id_or_name = r["id"]
                 ip = r["slave ip"]
                 print u"  [-]回收容器:", id_or_name
