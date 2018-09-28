@@ -634,7 +634,7 @@ def pro_menu():
             }
         }
 
-        IPs = {}
+        containers = {}
         results = []
         for i, ip in enumerate(ips):
             result = json.loads(mt.command2slave(ip, json.dumps(mission)))
@@ -645,15 +645,21 @@ def pro_menu():
             results.extend(result["result"])
 
         for i, container in enumerate(results):
-            if not IPs.has_key(container["image name"]):
-                IPs[container["image name"]] = {"ips": []}
-            IPs[container["image name"]]["ids"].append(container["id"])
+            if not containers.has_key(container["image name"]):
+                containers[container["image name"]] = {
+                    "containers": []
+                }
+            containers[container["image name"]]["containers"].append({
+                "slave ip": container["slave ip"],
+                "id": container["id"],
+            })
 
-        for image in IPs:
+        for image in containers:
             print u"[+]镜像名: %s" % pt.put_color(image, "white")
-            for ip in IPs[image]["ips"]:
+            for ip in containers[image]["ids"]:
                 print ip
-            print "-"*10, pt.put_color(str(len(IPs[image]["ips"])), "cyan"), "-"*10, "\n"
+            print "-"*10, pt.put_color(str(len(containers[image]["ids"])), "cyan"), "-"*10, "\n"
+
         '''
         mission = {
             "mission": "cmd2docker",
