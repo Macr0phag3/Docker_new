@@ -714,6 +714,10 @@ def pro_menu():
         print u"[!]完成"
         '''
     elif choice == '3':
+        if raw_input(pt.put_color(u"确定删除所有容器？\nyes/[no]> ", "red")) != "yes":
+            print u"已放弃操作"
+            return
+
         mission = {
             "mission": "cmd2docker",
             "commands": {
