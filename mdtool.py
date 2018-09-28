@@ -676,7 +676,7 @@ def pro_menu():
         elif choice == 'q':
             exit()
 
-        if not choice.isdigit() and int(choice) not in range(len(containers)):
+        if not choice.isdigit() and int(choice) not in range(len(image_order)):
             print pt.put_color(u"输入有误, 重新输入", "red")
             return
 
