@@ -688,7 +688,7 @@ def pro_menu():
                 print u"  [-]回收容器:", id_or_name
                 mission["commands"]["arg"] = [id_or_name, "kill"]
                 print u"    [-]停止容器 ...",
-                result = json.loads(mt.command2slave(, json.dumps(mission)))
+                result = json.loads(mt.command2slave(ip, json.dumps(mission)))
 
                 if result["code"]:
                     print pt.put_color(u"失败", "red")
