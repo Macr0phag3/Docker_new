@@ -664,7 +664,7 @@ def pro_menu():
             print "-" * 10, pt.put_color(str(len(containers[image]["containers"])), "cyan"), "-"*10
             print "\n"
 
-        choice = raw_input(u"选择要批量删除的镜像:\n> ")
+        choice = raw_input("选择要批量删除的镜像:\n> ")
         if not choice.isdigit() and int(choice) not in range(len(containers)):
             print pt.put_color(u"输入有误, 重新输入", "red")
             return
