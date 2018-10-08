@@ -110,7 +110,7 @@ def ip_used_ls(subnet):
     client = docker.APIClient(base_url='unix://var/run/docker.sock')
     networks = client.networks()
     result = [i["Id"] for i in networks if i["Driver"] ==
-              "bridge" and i["IPAM"]["Config"][0]["Subnet"] == subnet]
+              "bridge" and i["IPAM"]["Config"][0]["Subnet"] == setting["bridge"]["subnet"]]
 
     if len(result) == 1:
         ID = result[0]
