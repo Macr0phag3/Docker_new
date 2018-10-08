@@ -94,7 +94,7 @@ def basic_menu():
 
     show_logo()
     if choice == "0":
-        result = json.loads(mt.ip_assign(subnet))
+        result = json.loads(mt.ip_assign(container_subnet))
         if result["code"]:
             print pt.put_color(u"[X]分配 ip 失败", "red")
             print "  [-]", result["msg"]
@@ -338,7 +338,7 @@ def basic_menu():
             "mission": "cmd2slave",
             "commands": {
                 "command": "check_alive",
-                "arg": [subnet]
+                "arg": []
             }
         }
 
@@ -464,11 +464,11 @@ def nk_menu():
 
     show_logo()
     if choice == '0':
-        result = json.loads(mt.ip_ls(subnet))
+        result = json.loads(mt.ip_ls(container_subnet))
         pprint(result)
 
     elif choice == '1':
-        result = json.loads(mt.ip_used(subnet))
+        result = json.loads(mt.ip_used(container_subnet))
         for i in result:
             print i
         # pprint(result)
@@ -584,7 +584,7 @@ def pro_menu():
             goto .image_list
 
         for _ in range(container_num):
-            result = json.loads(mt.ip_assign(subnet))
+            result = json.loads(mt.ip_assign(container_subnet))
             if result["code"]:
                 print pt.put_color(u"[X]分配 ip 失败", "red")
                 print "  [-]", result["msg"]
@@ -802,6 +802,7 @@ signal.signal(signal.SIGTERM, exit)
 
 ips = mt.setting["slave_ip"]
 subnet = mt.setting["bridge"]["subnet"]
+container_subnet = mt.setting["container_subnet"]
 
 show_logo()
 Main_menu()
