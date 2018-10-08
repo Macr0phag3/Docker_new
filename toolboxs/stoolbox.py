@@ -121,7 +121,7 @@ def ip_used_ls(subnet):
         dicts["code"] = 0
     else:
         dicts["msg"] = "slave(%s) report a error: %s" % (setting["bridge"]["self_ip"], [
-            "slave 的 docker 不存在此网段", "网桥出现重复的问题", ][len(result) != 0])
+            u"slave 的 docker 不存在此网段", u"网桥出现重复的问题", ][len(result) != 0])
 
     return json.dumps(dicts)
 
