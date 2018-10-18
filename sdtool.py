@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from toolboxs import stoolbox as st
+from toolboxs import ptoolbox as pt
 from goto import with_goto
 from pprint import pprint
 import sys
@@ -40,18 +41,18 @@ def Main_menu():
     if choice == '1':
         result = json.loads(st.nk_bridge(subnet, self_ip, iface, gateway))
         if result["code"]:
-            print st.put_color("桥接失败", "red")
+            print pt.put_color("桥接失败", "red")
             print result["msg"]
         else:
-            print st.put_color("桥接成功", "green")
+            print pt.put_color("桥接成功", "green")
 
     elif choice == '2':
         result = json.loads(st.nk_unbridge())
         if result["code"]:
-            print st.put_color("取消桥接失败", "red")
+            print pt.put_color("取消桥接失败", "red")
             print result["msg"]
         else:
-            print st.put_color("取消桥接成功", "green")
+            print pt.put_color("取消桥接成功", "green")
 
     elif choice == '3':
         pprint(st.loads_ls())
@@ -63,7 +64,7 @@ def Main_menu():
         sys.exit("Bye~")
 
     else:
-        print st.put_color("输入有误, 重新输入", "red")
+        print pt.put_color("输入有误, 重新输入", "red")
 
     goto .main
 
