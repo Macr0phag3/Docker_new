@@ -146,7 +146,7 @@ while 1:
                     "result": "",
                 }]))
         else:
-            msg = u"来自 %s 的非法访问. silence is gold..." % from_ip
+            msg = u"来自 %s:%s 的非法访问. silence is gold..." % from_ip
             print pt.put_color(msg, "yellow")
             conn.sendall(msg)
 
