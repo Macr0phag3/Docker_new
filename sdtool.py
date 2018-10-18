@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-from api import env
-import stoolbox
+from toolboxs import mtoolbox as st
 from goto import with_goto
 from pprint import pprint
 import sys
 import signal
-import socket
 import json
-import re
 
 
 def abort(a, b):
@@ -29,40 +26,40 @@ def Main_menu():
 =============
 输入数字以继续: """
     )
-    stoolbox.cls()
-    setting = mtoolbox.load_setting("bridge")
-    subnet = setting["subnet"]
-    master_ip = setting["master_ip"]
-    iface = setting["iface"]
-    gateway = setting["gateway"]
+    st.cls()
+    setting = st.setting
+    subnet = setting["bridge"]["subnet"]
+    self_ip = setting["bridge"]["self_ip"]
+    iface = setting["bridge"]["iface"]
+    gateway = setting["bridge"]["gateway"]
 
     if choice == '1':
-        result = json.loads(stoolbox.nk_bridge(subnet, master_ip, iface, gateway))
+        result = json.loads(st.nk_bridge(subnet, self_ip, iface, gateway))
         if result["code"]:
-            print stoolbox.put_color("桥接失败", "red")
+            print st.put_color("桥接失败", "red")
             print result["msg"]
         else:
-            print stoolbox.put_color("桥接成功", "green")
+            print st.put_color("桥接成功", "green")
 
     elif choice == '2':
-        result = json.loads(stoolbox.nk_unbridge())
+        result = json.loads(st.nk_unbridge())
         if result["code"]:
-            print stoolbox.put_color("取消桥接失败", "red")
+            print st.put_color("取消桥接失败", "red")
             print result["msg"]
         else:
-            print stoolbox.put_color("取消桥接成功", "green")
+            print st.put_color("取消桥接成功", "green")
 
     elif choice == '3':
-        pprint(stoolbox.load_ls())
+        pprint(st.load_ls())
 
     elif choice == '4':
-        pprint(stoolbox.ip_used_ls(subnet))
+        pprint(st.ip_used_ls(subnet))
 
     elif choice == '0':
         sys.exit("Bye~")
 
     else:
-        print stoolbox.put_color("输入有误, 重新输入", "red")
+        print st.put_color("输入有误, 重新输入", "red")
 
     goto .main
 
