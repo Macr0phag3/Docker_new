@@ -54,7 +54,7 @@ def Main_menu():
             print st.put_color("取消桥接成功", "green")
 
     elif choice == '3':
-        pprint(st.load_ls())
+        pprint(st.loads_ls())
 
     elif choice == '4':
         pprint(st.ip_used_ls(subnet))
