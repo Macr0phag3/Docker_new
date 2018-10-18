@@ -11,6 +11,10 @@ def abort(a, b):
     sys.exit("\nBye~")
 
 
+def cls():
+    print "\033c"
+
+
 @with_goto
 def Main_menu():
     label .main
@@ -26,7 +30,7 @@ def Main_menu():
 =============
 输入数字以继续: """
     )
-    st.cls()
+    cls()
     setting = st.setting
     subnet = setting["bridge"]["subnet"]
     self_ip = setting["bridge"]["self_ip"]
