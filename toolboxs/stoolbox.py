@@ -160,7 +160,8 @@ def run(image_name, ip, command="", nk_name="containers"):  #
 
         con_ready = client.create_container(
             image_name, stdin_open=True, command=command,
-            detach=True, tty=True, networking_config=networking_config
+            detach=True, tty=True, networking_config=networking_config,
+            host_config=client.create_host_config(privileged=True),
         )  # 保证容器不会运行后立刻退出的必要可选参数
 
         id = con_ready.get('Id')
