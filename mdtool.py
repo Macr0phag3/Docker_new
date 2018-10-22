@@ -705,8 +705,8 @@ def pro_menu():
                 if result["code"]:
                     print pt.put_color(u"失败", "red")
                     print u"    [x]" + result["msg"]
-
-                print pt.put_color(u"成功", "green")
+                else:
+                    print pt.put_color(u"成功", "green")
                 print u"    [-]删除容器 ...",
                 mission["commands"]["arg"] = [id_or_name, "rm"]
                 result = json.loads(mt.command2slave(
@@ -715,9 +715,8 @@ def pro_menu():
                 if result["code"]:
                     print pt.put_color(u"失败", "red")
                     print u"    [x]" + result["msg"]
-                    continue
-
-                print pt.put_color(u"成功", "green")
+                else:
+                    print pt.put_color(u"成功", "green")
 
         print u"[!]完成"
 
