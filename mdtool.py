@@ -558,7 +558,7 @@ def pro_menu():
             }})))
 
         if image_list["code"]:
-            print pt.put_color(u"[X]获取虚拟机: %s 的所有镜像失败" % ip, "red")
+            print pt.put_color(u"[X]获取虚拟机: %s 的所有镜像失败" % mt.setting["bridge"]["self_ip"], "red")
             print "  [-]", image_list["msg"]
 
         print u"选择镜像"

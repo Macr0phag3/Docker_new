@@ -3,7 +3,6 @@ import socket
 import traceback
 import IPy
 import random
-import socket
 import json
 import ptoolbox as pt
 
@@ -151,7 +150,7 @@ def ip_assign(subnet, ip=0):  # ok
                         dicts["code"] = 0
                     else:
                         dicts["msg"] = "ip 不在网段 %s 内" % subnet
-                except Exception, e:
+                except:
                     pt.log(traceback.format_exc(), level="error",
                            description="this ip is illegal.", path=".master_log")
 
