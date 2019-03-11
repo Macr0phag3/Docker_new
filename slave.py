@@ -5,6 +5,7 @@ from toolboxs import ptoolbox as pt
 import json
 import traceback
 import time
+import threading
 
 
 def sign_in(ckey):  # ok
@@ -52,8 +53,8 @@ def recvd_cmd(mission):
             reload(st)
             dicts["code"] = 0
         except Exception, e:
-            print pt.put_color(u"重新载入模块: stoolbox 失败\n  [-]"+str(e), "red")
-            print "-"*50
+            print pt.put_color(u"重新载入模块: stoolbox 失败\n  [-]" + str(e), "red")
+            print "-" * 50
             pt.log(traceback.format_exc(), level="error",
                    description="%s reload module stoolbox failed" % st.setting["bridge"]["self_ip"], path=".slave_log")
             dicts["msg"] = str(e)
@@ -110,6 +111,32 @@ def recvd_msg(conn):  # ok
     conn.sendall(results)
 
 
+def multi_worker(conn):
+    '''
+    多线程进入到这函数，处理 master 发来的任务
+    '''
+    client_data = conn.recv(1024)
+    if sign_in(client_data):
+        conn.sendall('hello, my master')
+        try:
+            recvd_msg(conn)
+        except Exception, e:
+            print pt.put_color(u"处理信息时发生问题\n  [-]" + str(e), "red")
+            print "-" * 50
+            pt.log(traceback.format_exc(), level="error", description="slave(%s) recvd mission but can't finish it" %
+                   st.setting["bridge"]["self_ip"], path=".slave_log")
+
+            conn.sendall(json.dumps([{
+                "code": 1,
+                "msg": str(e),
+                "result": "",
+            }]))
+    else:
+        msg = u"来自 %s:%s 的非法访问. silence is gold..." % from_ip
+        print pt.put_color(msg, "yellow")
+        conn.sendall(msg)
+
+
 """
 监听端口，负责建立通信
 
@@ -129,34 +156,14 @@ print pt.put_color('slave is online', "green")
 while 1:
     try:
         conn, from_ip = sk.accept()
-        client_data = conn.recv(1024)
-        if sign_in(client_data):
-            conn.sendall('hello, my master')
-            try:
-                recvd_msg(conn)
-            except Exception, e:
-                print pt.put_color(u"处理信息时发生问题\n  [-]"+str(e), "red")
-                print "-"*50
-                pt.log(traceback.format_exc(), level="error", description="slave(%s) recvd mission but can't finish it" %
-                       st.setting["bridge"]["self_ip"], path=".slave_log")
-
-                conn.sendall(json.dumps([{
-                    "code": 1,
-                    "msg": str(e),
-                    "result": "",
-                }]))
-        else:
-            msg = u"来自 %s:%s 的非法访问. silence is gold..." % from_ip
-            print pt.put_color(msg, "yellow")
-            conn.sendall(msg)
-
+        th = threading.Thread(target=multi_worker, args=(conn,), daemon=True)
+        th.start()
     except KeyboardInterrupt:
         break
-
     except Exception, e:
         if "Keyboard" not in str(e):
-            print pt.put_color(u"出现一个隐藏问题\n  [-]"+str(e), "red")
-            print "-"*50
+            print pt.put_color(u"出现一个隐藏问题\n  [-]" + str(e), "red")
+            print "-" * 50
             pt.log(traceback.format_exc(), level="error",
                    description="slave reported an error", path=".slave_log")
 
