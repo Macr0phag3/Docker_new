@@ -136,6 +136,8 @@ def multi_worker(conn):
         print pt.put_color(msg, "yellow")
         conn.sendall(msg)
 
+    conn.close()
+
 
 """
 监听端口，负责建立通信
@@ -168,7 +170,5 @@ while 1:
                    description="slave reported an error", path=".slave_log")
 
         break
-
-    conn.close()
 
 print pt.put_color('slave is offline', "red")
