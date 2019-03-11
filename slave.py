@@ -93,8 +93,6 @@ def recvd_msg(conn):  # ok
     if not msg:  # 空消息，直接舍弃
         return
 
-    print('sleep 10s')
-    time.sleep(10)
     mission = json.loads(msg)
 
     if type(mission) == dict:  # 单任务模式
