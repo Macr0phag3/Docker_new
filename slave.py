@@ -93,6 +93,8 @@ def recvd_msg(conn):  # ok
     if not msg:  # 空消息，直接舍弃
         return
 
+    print('sleep 10s')
+    time.sleep(10)
     mission = json.loads(msg)
 
     if type(mission) == dict:  # 单任务模式
@@ -116,6 +118,7 @@ def multi_worker(conn):
     多线程进入到这函数，处理 master 发来的任务
     '''
     client_data = conn.recv(1024)
+
     if sign_in(client_data):
         conn.sendall('hello, my master')
         try:
