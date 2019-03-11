@@ -156,7 +156,7 @@ print pt.put_color('slave is online', "green")
 while 1:
     try:
         conn, from_ip = sk.accept()
-        th = threading.Thread(target=multi_worker, args=(conn,), daemon=True)
+        th = threading.Thread(target=multi_worker, args=(conn,))
         th.start()
     except KeyboardInterrupt:
         break
