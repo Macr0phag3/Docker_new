@@ -51,7 +51,7 @@ def cmd2slave(commands):
         return check_alive()
 
     elif commands["command"] == "pull_images":
-        return pull_images()
+        return pull_images(*commands["arg"])
 
     else:
         return json.dumps({
