@@ -81,7 +81,7 @@ def pull_images(image_names):
             dicts['result'][image_name] = 'failed'
 
             pt.log(traceback.format_exc(), level="error",
-                   description="pull the image: %s: %s failed" % (image_name), path=".slave_log")
+                   description="pull the image: %s failed" % (image_name), path=".slave_log")
 
             dicts["msg"] = "slave(%s) report a error: %s" % (
                 setting["bridge"]["self_ip"], str(e))
