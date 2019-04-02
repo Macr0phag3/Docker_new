@@ -65,11 +65,22 @@ def pull_images(image_names):
     '''
     拉取镜像
     '''
+    dicts = {
+        "code": 0,
+        "msg": "",
+        "result": {}
+    }
 
     client = docker.APIClient(base_url='unix://var/run/docker.sock')
     for image_name in image_names:
         # client.pull()
-        print(image_name)
+        try:
+            print(image_name)
+            dicts['result'][image_name] = 'success'
+        except Exception, e:
+            dicts['result'][image_name] = 'failed'
+
+    return json.dumps(dicts)
 
 
 def check_alive():
