@@ -50,12 +50,26 @@ def cmd2slave(commands):
     elif commands["command"] == "check_alive":
         return check_alive()
 
+    elif commands["command"] == "pull_images":
+        return pull_images()
+
     else:
         return json.dumps({
             "code": 1,
             "msg": "This command: %s is out of slave's ability..." % commands["command"],
             "result": ""
         })
+
+
+def pull_images(image_names):
+    '''
+    拉取镜像
+    '''
+
+    client = docker.APIClient(base_url='unix://var/run/docker.sock')
+    for image_name in image_names:
+        # client.pull()
+        print(image_name)
 
 
 def check_alive():
@@ -117,7 +131,8 @@ def ip_used_ls(subnet):
         net = client.inspect_network(ID)
         # pprint()
         containers = net["Containers"]
-        dicts["result"] = [containers[i]["IPv4Address"].split("/")[0] for i in containers]
+        dicts["result"] = [containers[i]
+                           ["IPv4Address"].split("/")[0] for i in containers]
         dicts["code"] = 0
     else:
         dicts["msg"] = "slave(%s) report a error: %s" % (setting["bridge"]["self_ip"], [
@@ -174,7 +189,8 @@ def run(image_name, ip, command="", nk_name="containers"):  #
         pt.log(traceback.format_exc(), level="error",
                description="run a container: %s: %s failed" % (image_name, ip), path=".slave_log")
 
-        dicts["msg"] = "slave(%s) report a error: %s" % (setting["bridge"]["self_ip"], str(e))
+        dicts["msg"] = "slave(%s) report a error: %s" % (
+            setting["bridge"]["self_ip"], str(e))
 
     return json.dumps(dicts)
 
@@ -208,14 +224,15 @@ def others_cmd(id_or_name, command):  # ok
         pt.log(traceback.format_exc(), level="error",
                description="no such container: %s" % (id_or_name), path=".slave_log")
 
-        dicts["msg"] = "slave(%s) report a error: %s" % (setting["bridge"]["self_ip"], str(e))
+        dicts["msg"] = "slave(%s) report a error: %s" % (
+            setting["bridge"]["self_ip"], str(e))
         return json.dumps(dicts)
 
     commands = {
         "pause": container.pause,
         "unpause": container.unpause,
-        "kill":  container.kill,
-        "rm":  container.remove,
+        "kill": container.kill,
+        "rm": container.remove,
     }
 
     try:
@@ -225,7 +242,8 @@ def others_cmd(id_or_name, command):  # ok
         pt.log(traceback.format_exc(), level="error",
                description="%s the container %s failed" % (command, id_or_name), path=".slave_log")
 
-        dicts["msg"] = "slave(%s) report a error: %s" % (setting["bridge"]["self_ip"], str(e))
+        dicts["msg"] = "slave(%s) report a error: %s" % (
+            setting["bridge"]["self_ip"], str(e))
 
     return json.dumps(dicts)
 
@@ -274,7 +292,7 @@ def containers_ls():  # ok
             dicts["result"].append({
                 "id": container["Id"],
                 "status": container["State"],
-                "start time":  container["Status"],
+                "start time": container["Status"],
                 "ip": container_ip,
                 "image name": container["Image"],
                 "slave ip": setting["bridge"]["self_ip"],
@@ -286,7 +304,8 @@ def containers_ls():  # ok
         pt.log(traceback.format_exc(), level="error",
                description="get all containers failed", path=".slave_log")
 
-        dicts["msg"] = "slave(%s) report a error: %s" % (setting["bridge"]["self_ip"], str(e))
+        dicts["msg"] = "slave(%s) report a error: %s" % (
+            setting["bridge"]["self_ip"], str(e))
 
     return json.dumps(dicts)
 
@@ -320,7 +339,8 @@ def images_ls():  # ok
         pt.log(traceback.format_exc(), level="error",
                description="get all images failed", path=".slave_log")
 
-        dicts["msg"] = "slave(%s) report a error: %s" % (setting["bridge"]["self_ip"], str(e))
+        dicts["msg"] = "slave(%s) report a error: %s" % (
+            setting["bridge"]["self_ip"], str(e))
 
     return json.dumps(dicts)
 
@@ -354,7 +374,8 @@ def loads_ls():  # ok
         pt.log(traceback.format_exc(), level="error",
                description="get loads failed", path=".slave_log")
 
-        dicts["msg"] = "slave(%s) report a error: %s" % (setting["bridge"]["self_ip"], str(e))
+        dicts["msg"] = "slave(%s) report a error: %s" % (
+            setting["bridge"]["self_ip"], str(e))
 
     return json.dumps(dicts)
 
@@ -406,8 +427,10 @@ ip route del default;\
 ip route add default via %s dev $iface""" % (raw_ip, raw_ip, iface, iface, gateway))
 
         if status:
-            pt.log(err, level="error", description="bridge network failed", path=".slave_log")
-            dicts["msg"] = "slave(%s) report a error: %s" % (setting["bridge"]["self_ip"], err)
+            pt.log(err, level="error",
+                   description="bridge network failed", path=".slave_log")
+            dicts["msg"] = "slave(%s) report a error: %s" % (
+                setting["bridge"]["self_ip"], err)
         else:
             dicts["code"] = 0
 
@@ -415,7 +438,8 @@ ip route add default via %s dev $iface""" % (raw_ip, raw_ip, iface, iface, gatew
         pt.log(traceback.format_exc(), level="error",
                description="create network failed", path=".slave_log")
 
-        dicts["msg"] = "slave(%s) report a error: %s" % (setting["bridge"]["self_ip"], str(e))
+        dicts["msg"] = "slave(%s) report a error: %s" % (
+            setting["bridge"]["self_ip"], str(e))
 
     return json.dumps(dicts)
 
@@ -446,8 +470,10 @@ docker network rm %s;
 systemctl restart network""" % (nk_name))
 
     if status:
-        pt.log(err, level="error", description="unbridge network failed", path=".slave_log")
-        dicts["msg"] = "slave(%s) report a error: %s" % (setting["bridge"]["self_ip"], err)
+        pt.log(err, level="error",
+               description="unbridge network failed", path=".slave_log")
+        dicts["msg"] = "slave(%s) report a error: %s" % (
+            setting["bridge"]["self_ip"], err)
     else:
         dicts["code"] = 0
 
