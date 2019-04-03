@@ -53,6 +53,10 @@ def cmd2slave(commands):
     elif commands["command"] == "pull_images":
         return pull_images(*commands["arg"])
 
+
+    elif commands["command"] == "delete_images":
+        return delete_images(*commands["arg"])
+
     else:
         return json.dumps({
             "code": 1,
