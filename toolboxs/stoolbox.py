@@ -78,7 +78,7 @@ def delete_images(image_names):
     client = docker.APIClient(base_url='unix://var/run/docker.sock')
     for image_name in image_names:
         try:
-            client.remove(image_name)
+            client.remove_image(image_name)
             dicts['result'][image_name] = 'success'
         except Exception, e:
             dicts["code"] = 1
