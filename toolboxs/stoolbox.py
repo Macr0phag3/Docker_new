@@ -533,3 +533,4 @@ except Exception, e:
     pt.log(traceback.format_exc(), level="error",
            description="load setting failed!", path=".slave_log")
     raise
+
