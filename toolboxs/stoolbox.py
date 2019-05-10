@@ -196,7 +196,8 @@ def run(image_name, ip, command="", nk_name="containers"):  #
     参数
     1. image_name: 镜像的名字
     2. ip: 分配给镜像的 ip
-    3. nk_name: 负责桥接的网络的名字，与桥接时创建的名字一致；默认为containers
+    3. command: 启动时的命令
+    4. nk_name: 负责桥接的网络的名字，与桥接时创建的名字一致；默认为containers
 
     返回值示例
     dicts = {
